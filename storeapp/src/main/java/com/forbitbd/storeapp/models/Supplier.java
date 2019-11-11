@@ -1,5 +1,7 @@
 package com.forbitbd.storeapp.models;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Supplier implements Serializable {
@@ -70,5 +72,11 @@ public class Supplier implements Serializable {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

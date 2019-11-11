@@ -1,17 +1,23 @@
 package com.forbitbd.storeapp.ui.store.receivedAdd;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Project;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.utils.Constant;
+import com.forbitbd.storeapp.utils.MyUtil;
 import com.forbitbd.storeapp.utils.PrebaseActivity;
+import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReceivedActivity extends PrebaseActivity implements ReceivedContract.View {
@@ -21,6 +27,11 @@ public class ReceivedActivity extends PrebaseActivity implements ReceivedContrac
     private Project project;
     private Receive receive;
     private List<Supplier> supplierList;
+
+    private AppCompatSpinner spSupplier;
+
+    private TextInputLayout tiDate;
+    private EditText etDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +50,18 @@ public class ReceivedActivity extends PrebaseActivity implements ReceivedContrac
     private void initView() {
         setupToolbar();
         getSupportActionBar().setTitle("Material Received Form");
+
+        spSupplier = findViewById(R.id.sp_supplier);
+
+        ArrayAdapter<Supplier> supplierArrayAdapter =
+                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,supplierList);
+
+        spSupplier.setAdapter(supplierArrayAdapter);
+
+        tiDate = findViewById(R.id.ti_date);
+        etDate = findViewById(R.id.date);
+
+        etDate.setText(MyUtil.getStringDate(new Date()));
 
 
     }

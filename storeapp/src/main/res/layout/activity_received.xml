@@ -42,6 +42,7 @@
                         android:textSize="16sp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/sp_supplier"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -59,7 +60,7 @@
                         android:id="@+id/date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/date"
+                        android:hint="@string/material_received_date"
                         android:focusable="false"
                         android:fontFamily="@font/arima_madurai_medium"
                         android:inputType="date"/>
@@ -94,7 +95,7 @@
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/name"
+                        android:hint="@string/received_material_name"
                         android:fontFamily="@font/arima_madurai_medium"
                         android:inputType="text"/>
 

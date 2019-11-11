@@ -36,4 +36,6 @@
     <string name="select_supplier">Select Supplier</string>
     <string name="unit">Unit</string>
     <string name="amount">Amount</string>
+    <string name="material_received_date">Material Received Date</string>
+    <string name="received_material_name">Received Material Name</string>
 </resources>
