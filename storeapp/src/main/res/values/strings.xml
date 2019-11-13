@@ -43,4 +43,10 @@
     <string name="ok">Ok</string>
     <string name="select_material_received_date">Select Material Received Date</string>
     <string name="quantity">Quantity</string>
+    <string name="yes">Yes</string>
+    <string name="issue_to">Issue To</string>
+    <string name="where_used">Where Used</string>
+    <string name="material_consumption_date">Material Consumption Date</string>
+    <string name="material_name">Material Name</string>
+    <string name="select_material_consumption_date">Select Material Consumption Date</string>
 </resources>

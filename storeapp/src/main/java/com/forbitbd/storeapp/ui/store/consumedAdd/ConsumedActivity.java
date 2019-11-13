@@ -1,14 +1,15 @@
-package com.forbitbd.storeapp.ui.store.receivedAdd;
+package com.forbitbd.storeapp.ui.store.consumedAdd;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.dialog.DatePickerListener;
 import com.forbitbd.storeapp.dialog.MyDatePickerFragment;
+import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Project;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
@@ -34,24 +36,19 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-public class ReceivedActivity extends PrebaseActivity
-        implements ReceivedContract.View, View.OnClickListener {
+public class ConsumedActivity extends PrebaseActivity implements ConsumedContract.View, View.OnClickListener {
 
-    private ReceivedPresenter mPresenter;
+    private ConsumedPresenter mPresenter;
 
     private Project project;
-    private Receive receive;
-    private List<Supplier> supplierList;
+    private Consume consume;
 
-    private AppCompatSpinner spSupplier;
-
-    private TextInputLayout tiDate,tiInvoiceNo,tiName,tiUnit,tiAmount;
-    private EditText etDate,etInvoiceNo,etAmount;
+    private TextInputLayout tiDate,tiIssueTo,tiWhereUsed,tiName,tiUnit,tiAmount;
+    private EditText etDate,etIssueTo,etWhereUsed,etAmount;
     private MaterialButton btnBrowse,btnSave;
     private ImageView ivImage;
 
     private AppCompatAutoCompleteTextView etUnit,etName;
-
 
     private Date date;
 
@@ -62,13 +59,15 @@ public class ReceivedActivity extends PrebaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_received);
-        mPresenter = new ReceivedPresenter(this);
+        setContentView(R.layout.activity_consumed);
         this.project = (Project) getIntent().getSerializableExtra(Constant.PROJECT);
-        this.receive = (Receive) getIntent().getSerializableExtra(Constant.RECEIVED);
-        this.supplierList = (List<Supplier>) getIntent().getSerializableExtra(Constant.SUPPLIER_LIST);
+        this.consume = (Consume) getIntent().getSerializableExtra(Constant.CONSUME);
+
         this.units = getIntent().getStringArrayListExtra(Constant.UNITS);
         this.names = getIntent().getStringArrayListExtra(Constant.NAMES);
+
+        mPresenter = new ConsumedPresenter(this);
+
 
 
         initView();
@@ -76,24 +75,19 @@ public class ReceivedActivity extends PrebaseActivity
 
     private void initView() {
         setupToolbar();
-        getSupportActionBar().setTitle("Material Received Form");
-
-        spSupplier = findViewById(R.id.sp_supplier);
-
-        ArrayAdapter<Supplier> supplierArrayAdapter =
-                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,supplierList);
-
-        spSupplier.setAdapter(supplierArrayAdapter);
+        getSupportActionBar().setTitle("Material Consumption Form");
 
         tiDate = findViewById(R.id.ti_date);
-        tiInvoiceNo = findViewById(R.id.ti_invoice_no);
+        tiIssueTo = findViewById(R.id.ti_issue_to);
+        tiWhereUsed = findViewById(R.id.ti_where_used);
         tiName = findViewById(R.id.ti_name);
         tiUnit = findViewById(R.id.ti_unit);
         tiAmount = findViewById(R.id.ti_amount);
 
 
         etDate = findViewById(R.id.date);
-        etInvoiceNo = findViewById(R.id.invoice_no);
+        etIssueTo = findViewById(R.id.issue_to);
+        etWhereUsed = findViewById(R.id.where_used);
 
         etName = findViewById(R.id.name);
         etName.setThreshold(1);
@@ -103,6 +97,7 @@ public class ReceivedActivity extends PrebaseActivity
         etUnit = findViewById(R.id.unit);
         etUnit.setThreshold(1);
         etUnit.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,units));
+
         etAmount = findViewById(R.id.amount);
 
         date = new Date();
@@ -114,7 +109,7 @@ public class ReceivedActivity extends PrebaseActivity
         btnBrowse = findViewById(R.id.browse);
         btnSave = findViewById(R.id.save);
 
-        if(receive!=null){
+        if(consume!=null){
             mPresenter.bind();
         }
 
@@ -127,54 +122,47 @@ public class ReceivedActivity extends PrebaseActivity
 
     @Override
     public void bind() {
-        spSupplier.setSelection(getPosition(receive.getReceived_from()));
-        etDate.setText(MyUtil.getStringDate(receive.getDate()));
-        etInvoiceNo.setText(receive.getInvoice_no());
-        etName.setText(receive.getName());
-        etUnit.setText(receive.getUnit());
-        etAmount.setText(String.valueOf(receive.getQuantity()));
+        etDate.setText(MyUtil.getStringDate(consume.getDate()));
+        etIssueTo.setText(consume.getIssue_to());
+        etWhereUsed.setText(consume.getWhere_used());
+        etName.setText(consume.getName());
+        etUnit.setText(consume.getUnit());
+        etAmount.setText(String.valueOf(consume.getQuantity()));
 
-        Picasso.with(this).load(receive.getImage()).into(ivImage);
+        Picasso.with(this).load(consume.getImage()).into(ivImage);
 
         btnSave.setText(getString(R.string.update));
-    }
 
-    private int getPosition(Supplier supplier){
-        for (Supplier x: supplierList){
-            if(x.get_id().equals(supplier.get_id())){
-                return supplierList.indexOf(x);
-            }
-        }
-
-        return 0;
     }
 
     @Override
     public void checkBeforeSave() {
-        String invoice = etInvoiceNo.getText().toString().trim();
+        String issueTo = etIssueTo.getText().toString().trim();
+        String whereUsed = etWhereUsed.getText().toString().trim();
         String name = etName.getText().toString().trim();
         String unit = etUnit.getText().toString().trim();
         String amountStr = etAmount.getText().toString().trim();
 
 
-        if(receive==null){
-            receive = new Receive();
+        if(consume==null){
+            consume = new Consume();
         }
 
-        receive.setProject(project.get_id());
-        receive.setDate(date);
-        receive.setReceived_from((Supplier) spSupplier.getSelectedItem());
-        receive.setInvoice_no(invoice);
-        receive.setName(name);
-        receive.setUnit(unit);
+        consume.setProject(project.get_id());
+        consume.setDate(date);
+        consume.setIssue_to(issueTo);
+        consume.setWhere_used(whereUsed);
+        consume.setName(name);
+        consume.setUnit(unit);
 
         try {
-            receive.setQuantity(Double.parseDouble(amountStr));
+            consume.setQuantity(Double.parseDouble(amountStr));
         }catch (Exception e){
+            consume.setQuantity(0);
             e.printStackTrace();
         }
 
-        boolean valid = mPresenter.validate(receive);
+        boolean valid = mPresenter.validate(consume);
 
         if(!valid){
             return;
@@ -188,19 +176,20 @@ public class ReceivedActivity extends PrebaseActivity
         if(!isOnline()){
             Toast.makeText(this, "Turn on Your Internet Connection to Perform this Operations", Toast.LENGTH_SHORT).show();
         }else{
-            if(receive.get_id()==null){
-                mPresenter.saveReceive(receive,bytes);
+            if(consume.get_id()==null){
+                mPresenter.saveConsume(consume,bytes);
             }else{
-                mPresenter.updateReceive(receive,bytes);
+                mPresenter.updateConsume(consume,bytes);
             }
         }
+
     }
 
     @Override
     public void openCalendar() {
         MyDatePickerFragment myDateDialog = new MyDatePickerFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.TITLE,getString(R.string.select_material_received_date));
+        bundle.putString(Constant.TITLE,getString(R.string.select_material_consumption_date));
         myDateDialog.setArguments(bundle);
         myDateDialog.setCancelable(false);
         myDateDialog.setDatePickerListener(new DatePickerListener() {
@@ -222,48 +211,55 @@ public class ReceivedActivity extends PrebaseActivity
     @Override
     public void clearPreError() {
         tiDate.setErrorEnabled(false);
-        tiInvoiceNo.setErrorEnabled(false);
+        tiIssueTo.setErrorEnabled(false);
+        tiWhereUsed.setErrorEnabled(false);
         tiName.setErrorEnabled(false);
         tiUnit.setErrorEnabled(false);
         tiAmount.setErrorEnabled(false);
-
     }
 
     @Override
     public void showError(String message, int fieldId) {
         switch (fieldId){
-            case 1:
-                tiInvoiceNo.setError(message);
-                etInvoiceNo.requestFocus();
-                break;
 
-            case 2:
+            case 1:
                 tiName.setError(message);
                 etName.requestFocus();
                 break;
 
-            case 3:
+            case 2:
                 tiUnit.setError(message);
                 etUnit.requestFocus();
                 break;
 
+            case 3:
+                tiIssueTo.setError(message);
+                etIssueTo.requestFocus();
+                break;
+
             case 4:
+                tiWhereUsed.setError(message);
+                etWhereUsed.requestFocus();
+                break;
+
+            case 5:
                 tiAmount.setError(message);
                 etAmount.requestFocus();
                 break;
         }
+
     }
 
     @Override
-    public void complete(Receive receive) {
-        Log.d("KKKKKKK","Bal Sal Call");
+    public void complete(Consume consume) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.RECEIVED,receive);
+        bundle.putSerializable(Constant.CONSUME,consume);
         intent.putExtras(bundle);
 
         setResult(RESULT_OK,intent);
         finish();
+
     }
 
     @Override
@@ -275,6 +271,7 @@ public class ReceivedActivity extends PrebaseActivity
         }else if(view==btnSave){
             mPresenter.checkBeforeSave();
         }
+
     }
 
 
@@ -284,7 +281,15 @@ public class ReceivedActivity extends PrebaseActivity
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.getUri());
+
+                    Bitmap bitmap= null;
+
+                    if(Build.VERSION.SDK_INT<28){
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), result.getUri());
+                    }else{
+                        ImageDecoder.Source source = ImageDecoder.createSource(this.getContentResolver(), result.getUri());
+                        bitmap = ImageDecoder.decodeBitmap(source);
+                    }
 
                     if(bitmap.getWidth()<576){
                         showToast("Should Select Larger Image !");

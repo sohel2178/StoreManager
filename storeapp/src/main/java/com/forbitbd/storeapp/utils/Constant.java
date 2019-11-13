@@ -11,4 +11,6 @@ public class Constant {
     public static final String TIME="TIME";
     public static final String UNITS="UNITS";
     public static final String NAMES="NAMES";
+    public static final String CONTENT="CONTENT";
+    public static final String CONSUME="CONSUME";
 }

@@ -1,8 +1,9 @@
 package com.forbitbd.storeapp.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Consume {
+public class Consume implements Serializable {
 
     private String _id;
     private String name;

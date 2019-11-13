@@ -1,0 +1,47 @@
+package com.forbitbd.storeapp.ui.store.comsumed;
+
+import com.forbitbd.storeapp.api.ApiClient;
+import com.forbitbd.storeapp.api.ServiceGenerator;
+import com.forbitbd.storeapp.models.Consume;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ConsumedPresenter implements ConsumedContract.Presenter {
+
+    private ConsumedContract.View mView;
+
+    public ConsumedPresenter(ConsumedContract.View mView) {
+        this.mView = mView;
+    }
+
+    @Override
+    public void getProjectConsumes(String projectID) {
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+
+        client.getProjectConsumes(projectID)
+                .enqueue(new Callback<List<Consume>>() {
+                    @Override
+                    public void onResponse(Call<List<Consume>> call, Response<List<Consume>> response) {
+                        mView.hideProgressDialog();
+
+                        if(response.isSuccessful()){
+                            mView.renderAdapter(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Consume>> call, Throwable t) {
+                        mView.hideProgressDialog();
+                    }
+                });
+    }
+
+    @Override
+    public void deleteConsume(Consume receive) {
+
+    }
+}

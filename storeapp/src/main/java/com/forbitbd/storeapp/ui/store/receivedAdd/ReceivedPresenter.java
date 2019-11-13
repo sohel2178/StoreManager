@@ -127,7 +127,50 @@ public class ReceivedPresenter implements ReceivedContract.Presenter {
     }
 
     @Override
-    public void updateReceive(Receive receive, byte[] bytes) {
+    public void updateReceive(final Receive receive, byte[] bytes) {
+
+        mView.showProgressDialog();
+
+        MultipartBody.Part part=null;
+
+        if(bytes!=null){
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), bytes);
+            part = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
+        }
+
+        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), receive.getName());
+        RequestBody unit = RequestBody.create(MediaType.parse("text/plain"), receive.getUnit());
+        RequestBody invoice_no = RequestBody.create(MediaType.parse("text/plain"), receive.getInvoice_no());
+        RequestBody quantity = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(receive.getQuantity()));
+        RequestBody received_from = RequestBody.create(MediaType.parse("text/plain"), receive.getReceived_from().get_id());
+        RequestBody date = RequestBody.create(MediaType.parse("text/plain"), MyUtil.getStringDate(receive.getDate()));
+
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("name", name);
+        map.put("unit", unit);
+        map.put("invoice_no", invoice_no);
+        map.put("quantity", quantity);
+        map.put("received_from", received_from);
+        map.put("date", date);
+
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+
+        client.updateReceive(receive.getProject(),receive.get_id(),part,map)
+                .enqueue(new Callback<Receive>() {
+                    @Override
+                    public void onResponse(Call<Receive> call, Response<Receive> response) {
+                        mView.hideProgressDialog();
+
+                        if(response.isSuccessful()){
+                            mView.complete(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Receive> call, Throwable t) {
+                        mView.hideProgressDialog();
+                    }
+                });
 
     }
 }

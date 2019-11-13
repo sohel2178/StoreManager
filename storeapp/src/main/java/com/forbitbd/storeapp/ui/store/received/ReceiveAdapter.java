@@ -20,4 +20,24 @@ public class ReceiveAdapter extends BaseAdapter<Receive,ReceiveListener,ReceiveH
     public ReceiveHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ReceiveHolder(inflate(R.layout.item_receive,parent),getListener());
     }
+
+    private int getPosition(Receive receive){
+        for (Receive x: getItems()){
+            if(x.get_id().equals(receive.get_id())){
+                return getItems().indexOf(x);
+            }
+        }
+
+        return 0;
+    }
+
+    public void update(Receive receive){
+        int position = getPosition(receive);
+        update(receive,position);
+    }
+
+    public void remove(Receive receive){
+        int position = getPosition(receive);
+        remove(position);
+    }
 }

@@ -13,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forbitbd.storeapp.R;
+import com.forbitbd.storeapp.dialog.delete.DeleteDialog;
+import com.forbitbd.storeapp.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.ui.store.StoreBaseFragment;
+import com.forbitbd.storeapp.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -93,18 +96,40 @@ public class ReceivedFragment extends StoreBaseFragment implements ReceivedContr
     }
 
     @Override
+    public void updateItem(Receive receive) {
+        adapter.update(receive);
+    }
+
+    @Override
+    public void removeFromAdapter(Receive receive) {
+        adapter.remove(receive);
+    }
+
+    @Override
     public void onItemClick(int position) {
 
     }
 
     @Override
     public void onItemUpdate(int position) {
-
+        get_activity().startUpdateReceiveActivity(adapter.getItem(position));
     }
 
     @Override
-    public void onItemRemove(int position) {
+    public void onItemRemove(final int position) {
+        final DeleteDialog deleteDialog = new DeleteDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.CONTENT,"Really want to delete this Item??");
+        deleteDialog.setArguments(bundle);
+        deleteDialog.setListener(new DialogClickListener() {
+            @Override
+            public void positiveButtonClick() {
+                deleteDialog.dismiss();
+                mPresenter.deleteReceive(adapter.getItem(position));
+            }
+        });
 
+        deleteDialog.show(getChildFragmentManager(),"HHH");
     }
 
     @Override

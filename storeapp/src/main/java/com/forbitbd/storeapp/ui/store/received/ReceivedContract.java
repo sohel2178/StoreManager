@@ -8,6 +8,7 @@ public interface ReceivedContract {
 
     interface Presenter{
         void getProjectReceives(String projectID);
+        void deleteReceive(Receive receive);
     }
 
     interface View{
@@ -17,5 +18,7 @@ public interface ReceivedContract {
         void showProgressDialog();
         void hideProgressDialog();
         void addItem(Receive receive);
+        void updateItem(Receive receive);
+        void removeFromAdapter(Receive receive);
     }
 }

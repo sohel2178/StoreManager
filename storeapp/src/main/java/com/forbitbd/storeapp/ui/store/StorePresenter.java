@@ -17,4 +17,9 @@ public class StorePresenter implements StoreContract.Presenter {
     public void startReceivedActivity() {
         mView.startReceivedActivity();
     }
+
+    @Override
+    public void startConsumedActivity() {
+        mView.startConsumedActivity();
+    }
 }

@@ -1,4 +1,4 @@
-package com.forbitbd.storeapp.ui.store.received;
+package com.forbitbd.storeapp.ui.store.comsumed;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,18 +6,19 @@ import android.widget.TextView;
 
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
-import com.forbitbd.storeapp.models.Receive;
+import com.forbitbd.storeapp.models.Consume;
 import com.squareup.picasso.Picasso;
 
-public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implements View.OnClickListener {
+public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implements View.OnClickListener {
 
     ImageView ivImage;
     TextView tvName,tvSupplier;
 
     ImageView ivEdit,ivDelete;
 
-    public ReceiveHolder(View itemView, ReceiveListener listener) {
+    public ConsumeHolder(View itemView, ConsumeListener listener) {
         super(itemView, listener);
+
         ivImage = itemView.findViewById(R.id.image);
         ivEdit = itemView.findViewById(R.id.edit);
         ivDelete = itemView.findViewById(R.id.delete);
@@ -29,22 +30,21 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
         ivImage.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
-
     }
 
     @Override
-    public void bind(Receive receive) {
+    public void bind(Consume consume) {
 
-        tvName.setText(receive.getName()
+        tvName.setText(consume.getName()
                 .concat(" ")
-                .concat(String.valueOf(receive.getQuantity()))
-                .concat(" ").concat(receive.getUnit())
+                .concat(String.valueOf(consume.getQuantity()))
+                .concat(" ").concat(consume.getUnit())
         );
 
-        tvSupplier.setText("Supplier: ".concat(receive.getReceived_from().getName()));
+        tvSupplier.setText("Used In : ".concat(consume.getWhere_used()));
 
         Picasso.with(itemView.getContext())
-                .load(receive.getImage())
+                .load(consume.getImage())
                 .into(ivImage);
 
     }

@@ -41,4 +41,27 @@ public class ReceivedPresenter implements ReceivedContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void deleteReceive(final Receive receive) {
+        mView.showProgressDialog();
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+
+        client.deleteReceive(receive.getProject(),receive.get_id())
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        mView.hideProgressDialog();
+
+                        if(response.isSuccessful()){
+                            mView.removeFromAdapter(receive);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        mView.hideProgressDialog();
+                    }
+                });
+    }
 }

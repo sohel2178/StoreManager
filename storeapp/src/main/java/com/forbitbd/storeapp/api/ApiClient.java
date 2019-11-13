@@ -1,5 +1,6 @@
 package com.forbitbd.storeapp.api;
 
+import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 
@@ -10,6 +11,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -55,4 +57,37 @@ public interface ApiClient {
     Call<Receive> addReceive(@Path("project_id") String projectId,
                               @Part MultipartBody.Part file,
                               @PartMap() Map<String, RequestBody> partMap);
+
+    @PUT("/api/projects/{project_id}/receives/{receive_id}")
+    @Multipart
+    Call<Receive> updateReceive(@Path("project_id") String projectId,
+                                  @Path("receive_id") String receive_id,
+                                  @Part MultipartBody.Part file,
+                                  @PartMap() Map<String, RequestBody> partMap);
+
+    @DELETE("/api/projects/{project_id}/receives/{receive_id}")
+    Call<Void> deleteReceive(@Path("project_id") String projectId,
+                             @Path("receive_id") String receive_id);
+
+
+
+    @GET("/api/projects/{project_id}/consumes")
+    Call<List<Consume>> getProjectConsumes(@Path("project_id") String projectId);
+
+    @POST("/api/projects/{project_id}/consumes")
+    @Multipart
+    Call<Consume> addConsume(@Path("project_id") String projectId,
+                             @Part MultipartBody.Part file,
+                             @PartMap() Map<String, RequestBody> partMap);
+
+    @PUT("/api/projects/{project_id}/consumes/{consume_id}")
+    @Multipart
+    Call<Consume> updateConsume(@Path("project_id") String projectId,
+                                @Path("consume_id") String consume_id,
+                                @Part MultipartBody.Part file,
+                                @PartMap() Map<String, RequestBody> partMap);
+
+    @DELETE("/api/projects/{project_id}/consumes/{consume_id}")
+    Call<Void> deleteConsume(@Path("project_id") String projectId,
+                             @Path("consume_id") String consume_id);
 }
