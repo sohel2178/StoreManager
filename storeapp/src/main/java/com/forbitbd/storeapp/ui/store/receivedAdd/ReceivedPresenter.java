@@ -1,6 +1,20 @@
 package com.forbitbd.storeapp.ui.store.receivedAdd;
 
+import android.util.Log;
+
+import com.forbitbd.storeapp.api.ApiClient;
+import com.forbitbd.storeapp.api.ServiceGenerator;
 import com.forbitbd.storeapp.models.Receive;
+import com.forbitbd.storeapp.utils.MyUtil;
+
+import java.util.HashMap;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReceivedPresenter implements ReceivedContract.Presenter {
 
@@ -18,6 +32,11 @@ public class ReceivedPresenter implements ReceivedContract.Presenter {
     @Override
     public void openCalendar() {
         mView.openCalendar();
+    }
+
+    @Override
+    public void checkBeforeSave() {
+        mView.checkBeforeSave();
     }
 
     @Override
@@ -48,8 +67,8 @@ public class ReceivedPresenter implements ReceivedContract.Presenter {
             return false;
         }
 
-        if(receive.getAmount() <=0){
-            mView.showError("Amount Should be Greater than 0",4);
+        if(receive.getQuantity() <=0){
+            mView.showError("Quantity Should be Greater than 0",4);
             return false;
         }
         return true;
@@ -58,5 +77,57 @@ public class ReceivedPresenter implements ReceivedContract.Presenter {
     @Override
     public void openCamera() {
         mView.openCamera();
+    }
+
+    @Override
+    public void saveReceive(Receive receive, byte[] bytes) {
+
+        mView.showProgressDialog();
+
+        MultipartBody.Part part=null;
+
+        if(bytes!=null){
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), bytes);
+            part = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
+        }
+
+        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), receive.getName());
+        RequestBody unit = RequestBody.create(MediaType.parse("text/plain"), receive.getUnit());
+        RequestBody invoice_no = RequestBody.create(MediaType.parse("text/plain"), receive.getInvoice_no());
+        RequestBody quantity = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(receive.getQuantity()));
+        RequestBody received_from = RequestBody.create(MediaType.parse("text/plain"), receive.getReceived_from().get_id());
+        RequestBody date = RequestBody.create(MediaType.parse("text/plain"), MyUtil.getStringDate(receive.getDate()));
+
+        HashMap<String, RequestBody> map = new HashMap<>();
+        map.put("name", name);
+        map.put("unit", unit);
+        map.put("invoice_no", invoice_no);
+        map.put("quantity", quantity);
+        map.put("received_from", received_from);
+        map.put("date", date);
+
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+
+        client.addReceive(receive.getProject(),part,map)
+                .enqueue(new Callback<Receive>() {
+                    @Override
+                    public void onResponse(Call<Receive> call, Response<Receive> response) {
+                        mView.hideProgressDialog();
+                        if(response.isSuccessful()){
+                            mView.complete(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Receive> call, Throwable t) {
+                        mView.hideProgressDialog();
+                    }
+                });
+
+    }
+
+    @Override
+    public void updateReceive(Receive receive, byte[] bytes) {
+
     }
 }

@@ -1,16 +1,19 @@
 package com.forbitbd.storeapp.ui.store.receivedAdd;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.dialog.DatePickerListener;
@@ -42,14 +45,18 @@ public class ReceivedActivity extends PrebaseActivity
     private AppCompatSpinner spSupplier;
 
     private TextInputLayout tiDate,tiInvoiceNo,tiName,tiUnit,tiAmount;
-    private EditText etDate,etInvoiceNo,etName,etUnit,etAmount;
+    private EditText etDate,etInvoiceNo,etAmount;
     private MaterialButton btnBrowse,btnSave;
     private ImageView ivImage;
+
+    private AppCompatAutoCompleteTextView etUnit,etName;
 
 
     private Date date;
 
     private byte[] bytes;
+
+    private List<String> units,names;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,9 @@ public class ReceivedActivity extends PrebaseActivity
         this.project = (Project) getIntent().getSerializableExtra(Constant.PROJECT);
         this.receive = (Receive) getIntent().getSerializableExtra(Constant.RECEIVED);
         this.supplierList = (List<Supplier>) getIntent().getSerializableExtra(Constant.SUPPLIER_LIST);
+        this.units = getIntent().getStringArrayListExtra(Constant.UNITS);
+        this.names = getIntent().getStringArrayListExtra(Constant.NAMES);
+
 
         initView();
     }
@@ -83,8 +93,15 @@ public class ReceivedActivity extends PrebaseActivity
 
         etDate = findViewById(R.id.date);
         etInvoiceNo = findViewById(R.id.invoice_no);
+
         etName = findViewById(R.id.name);
+        etName.setThreshold(1);
+        etName.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,names));
+
+
         etUnit = findViewById(R.id.unit);
+        etUnit.setThreshold(1);
+        etUnit.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,units));
         etAmount = findViewById(R.id.amount);
 
         date = new Date();
@@ -110,6 +127,53 @@ public class ReceivedActivity extends PrebaseActivity
     @Override
     public void bind() {
 
+    }
+
+    @Override
+    public void checkBeforeSave() {
+        String invoice = etInvoiceNo.getText().toString().trim();
+        String name = etName.getText().toString().trim();
+        String unit = etUnit.getText().toString().trim();
+        String amountStr = etAmount.getText().toString().trim();
+
+
+        if(receive==null){
+            receive = new Receive();
+        }
+
+        receive.setProject(project.get_id());
+        receive.setDate(date);
+        receive.setReceived_from((Supplier) spSupplier.getSelectedItem());
+        receive.setInvoice_no(invoice);
+        receive.setName(name);
+        receive.setUnit(unit);
+
+        try {
+            receive.setQuantity(Double.parseDouble(amountStr));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        boolean valid = mPresenter.validate(receive);
+
+        if(!valid){
+            return;
+        }
+
+        if(ivImage.getDrawable()==null){
+            Toast.makeText(this, "Browse to Select/Take an Invoice Image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!isOnline()){
+            Toast.makeText(this, "Turn on Your Internet Connection to Perform this Operations", Toast.LENGTH_SHORT).show();
+        }else{
+            if(receive.get_id()==null){
+                mPresenter.saveReceive(receive,bytes);
+            }else{
+                mPresenter.updateReceive(receive,bytes);
+            }
+        }
     }
 
     @Override
@@ -171,13 +235,25 @@ public class ReceivedActivity extends PrebaseActivity
     }
 
     @Override
+    public void complete(Receive receive) {
+        Log.d("KKKKKKK","Bal Sal Call");
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.RECEIVED,receive);
+        intent.putExtras(bundle);
+
+        setResult(RESULT_OK,intent);
+        finish();
+    }
+
+    @Override
     public void onClick(View view) {
         if(view==etDate){
             mPresenter.openCalendar();
         }else if(view==btnBrowse){
             mPresenter.openCamera();
         }else if(view==btnSave){
-
+            mPresenter.checkBeforeSave();
         }
     }
 

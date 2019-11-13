@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/ti_name">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -108,13 +108,13 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/ti_unit">
 
-                    <EditText
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/unit"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="phone"/>
+                        android:inputType="text"/>
 
 
 
@@ -129,9 +129,9 @@
                         android:id="@+id/amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/amount"
+                        android:hint="@string/quantity"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="textEmailAddress"/>
+                        android:inputType="numberDecimal"/>
 
 
 

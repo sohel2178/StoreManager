@@ -2,6 +2,7 @@ package com.forbitbd.storeapp.ui.store;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.SearchView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -12,6 +13,7 @@ import android.view.View;
 
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Project;
+import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.ui.store.addSupplier.AddSupplierActivity;
 import com.forbitbd.storeapp.ui.store.comsumed.ConsumedFragment;
@@ -25,6 +27,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StoreActivity extends PrebaseActivity implements StoreContract.View, View.OnClickListener {
 
@@ -45,6 +49,8 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private ReceivedFragment receivedFragment;
 
     private FloatingActionButton fabCreateSupplier,fabReceived;
+
+
 
 
 
@@ -86,8 +92,8 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
             pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         }
         pagerAdapter.addFragment(supplierFragment,"Suppliers");
-        pagerAdapter.addFragment(consumedFragment,"Consumed");
         pagerAdapter.addFragment(receivedFragment,"Received");
+        pagerAdapter.addFragment(consumedFragment,"Consumed");
        /* pagerAdapter.addFragment(new AccountFragment(), "Accounts");
         pagerAdapter.addFragment(new TransactionFragment(), "Transactions");*/
 
@@ -116,10 +122,12 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.PROJECT,project);
         bundle.putSerializable(Constant.SUPPLIER_LIST, (Serializable) supplierFragment.getSuppliers());
+        bundle.putStringArrayList(Constant.UNITS, (ArrayList<String>) receivedFragment.getUnits());
+        bundle.putStringArrayList(Constant.NAMES, (ArrayList<String>) receivedFragment.getMaterialNames());
         intent.putExtras(bundle);
-
         startActivityForResult(intent,RECEIVED);
     }
+
 
     @Override
     public void startUpdateSupplierActivity(Supplier supplier) {
@@ -152,6 +160,11 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         if(requestCode==UPDATE_SUPPLIER && resultCode==RESULT_OK){
             Supplier supplier = (Supplier) data.getSerializableExtra(Constant.SUPPLIER);
             supplierFragment.updateSupplierToAdapter(supplier);
+        }
+
+        if(requestCode==RECEIVED && resultCode == RESULT_OK){
+            Receive receive = (Receive) data.getSerializableExtra(Constant.RECEIVED);
+            receivedFragment.addItem(receive);
         }
     }
 }

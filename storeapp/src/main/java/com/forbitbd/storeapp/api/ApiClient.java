@@ -1,5 +1,6 @@
 package com.forbitbd.storeapp.api;
 
+import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 
 import java.util.List;
@@ -41,4 +42,17 @@ public interface ApiClient {
                                   @Path("supplier_id") String supplier_id,
                                   @Part MultipartBody.Part file,
                                   @PartMap() Map<String, RequestBody> partMap);
+
+
+
+
+    @GET("/api/projects/{project_id}/receives")
+    Call<List<Receive>> getProjectReceives(@Path("project_id") String projectId);
+
+
+    @POST("/api/projects/{project_id}/receives")
+    @Multipart
+    Call<Receive> addReceive(@Path("project_id") String projectId,
+                              @Part MultipartBody.Part file,
+                              @PartMap() Map<String, RequestBody> partMap);
 }

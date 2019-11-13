@@ -42,4 +42,5 @@
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="select_material_received_date">Select Material Received Date</string>
+    <string name="quantity">Quantity</string>
 </resources>

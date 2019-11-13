@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.zoomImage.ZoomImageActivity">
 
-    <com.linearbd.employeemanager.customView.ZoomableImageView
+    <com.forbitbd.storeapp.customView.ZoomableImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/zoomImage"/>

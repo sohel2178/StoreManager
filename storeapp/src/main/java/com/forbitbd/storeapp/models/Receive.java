@@ -1,8 +1,9 @@
 package com.forbitbd.storeapp.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Receive {
+public class Receive implements Serializable {
 
     private String _id;
     private String name;
@@ -11,7 +12,7 @@ public class Receive {
     private String image;
     private Supplier received_from;
     private String invoice_no;
-    private double amount;
+    private double quantity;
     private Date date;
     private Date created_at;
 
@@ -91,11 +92,11 @@ public class Receive {
         this.created_at = created_at;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getQuantity() {
+        return quantity;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 }
