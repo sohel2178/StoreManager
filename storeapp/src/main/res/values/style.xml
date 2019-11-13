@@ -33,6 +33,17 @@
         <item name="android:tint">@android:color/white</item>
     </style>
 
+    <style name="MyDialog" parent="CustomDialogTheme">
+        <item name="android:windowBackground">@drawable/my_dialog</item>
+    </style>
 
-    <string name="update">Update</string>
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--buttons color-->
+        <item name="colorAccent">@android:color/holo_orange_dark</item>
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+
+
 </resources>

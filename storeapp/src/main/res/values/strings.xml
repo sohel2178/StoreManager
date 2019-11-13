@@ -38,4 +38,8 @@
     <string name="amount">Amount</string>
     <string name="material_received_date">Material Received Date</string>
     <string name="received_material_name">Received Material Name</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="select_material_received_date">Select Material Received Date</string>
 </resources>
