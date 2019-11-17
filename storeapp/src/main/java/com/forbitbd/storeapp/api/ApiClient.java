@@ -2,6 +2,7 @@ package com.forbitbd.storeapp.api;
 
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
+import com.forbitbd.storeapp.models.StoreResponse;
 import com.forbitbd.storeapp.models.Supplier;
 
 import java.util.List;
@@ -44,6 +45,15 @@ public interface ApiClient {
                                   @Path("supplier_id") String supplier_id,
                                   @Part MultipartBody.Part file,
                                   @PartMap() Map<String, RequestBody> partMap);
+
+
+    @DELETE("/api/projects/{project_id}/suppliers/{supplier_id}")
+    Call<Void> deleteSupplier(@Path("project_id") String projectId,
+                             @Path("supplier_id") String supplier_id);
+
+
+    @GET("/api/projects/{project_id}/suppliers/{supplier_id}/receives")
+    Call<List<Receive>> getSupplierReceive(@Path("project_id") String project_id,@Path("supplier_id") String supplier_id);
 
 
 
@@ -90,4 +100,7 @@ public interface ApiClient {
     @DELETE("/api/projects/{project_id}/consumes/{consume_id}")
     Call<Void> deleteConsume(@Path("project_id") String projectId,
                              @Path("consume_id") String consume_id);
+
+    @GET("/api/projects/{project_id}/stores")
+    Call<StoreResponse> getStoreData(@Path("project_id") String projectID);
 }

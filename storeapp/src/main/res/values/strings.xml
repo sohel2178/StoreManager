@@ -10,6 +10,8 @@
     <string name="supplied_material">Supplied Material</string>
     <string name="browse">browse</string>
     <string name="save">save</string>
+    <string name="prev"><![CDATA[<]]></string>
+    <string name="next"><![CDATA[>]]></string>
 
 
     <string-array name="month_array">
@@ -49,4 +51,10 @@
     <string name="material_consumption_date">Material Consumption Date</string>
     <string name="material_name">Material Name</string>
     <string name="select_material_consumption_date">Select Material Consumption Date</string>
+    <string name="transaction_count">Transaction Count</string>
+    <string name="received_detail">Received Detail</string>
+    <string name="supplier_name">Supplier Name</string>
+    <string name="received_date">Received Date</string>
+    <string name="total_supplied">Total Supplied</string>
+    <string name="select_transaction_date">Select Transaction Date</string>
 </resources>

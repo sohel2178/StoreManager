@@ -22,4 +22,9 @@ public class StorePresenter implements StoreContract.Presenter {
     public void startConsumedActivity() {
         mView.startConsumedActivity();
     }
+
+    @Override
+    public void startReportActivity() {
+        mView.startReportActivity();
+    }
 }

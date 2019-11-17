@@ -5,4 +5,6 @@ import com.forbitbd.storeapp.models.Supplier;
 
 
 public interface SupplierListener extends BaseListener<Supplier> {
+
+    void onImageClick(int position);
 }

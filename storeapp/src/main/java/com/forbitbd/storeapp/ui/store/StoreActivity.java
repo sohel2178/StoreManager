@@ -19,6 +19,7 @@ import com.forbitbd.storeapp.ui.store.comsumed.ConsumedFragment;
 import com.forbitbd.storeapp.ui.store.consumedAdd.ConsumedActivity;
 import com.forbitbd.storeapp.ui.store.received.ReceivedFragment;
 import com.forbitbd.storeapp.ui.store.receivedAdd.ReceivedActivity;
+import com.forbitbd.storeapp.ui.store.report.ReportActivity;
 import com.forbitbd.storeapp.ui.store.supplier.SupplierFragment;
 import com.forbitbd.storeapp.utils.Constant;
 import com.forbitbd.storeapp.utils.PrebaseActivity;
@@ -51,7 +52,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private ConsumedFragment consumedFragment;
     private ReceivedFragment receivedFragment;
 
-    private FloatingActionButton fabCreateSupplier,fabReceived,fabConsumed;
+    private FloatingActionButton fabCreateSupplier,fabReceived,fabConsumed,fabReport,fabDownload;
 
 
 
@@ -86,10 +87,14 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         fabCreateSupplier = findViewById(R.id.fab_add_supplier);
         fabReceived = findViewById(R.id.fab_received);
         fabConsumed = findViewById(R.id.fab_consumed);
+        fabReport = findViewById(R.id.fab_report);
+        fabDownload = findViewById(R.id.fab_download);
 
         fabCreateSupplier.setOnClickListener(this);
         fabReceived.setOnClickListener(this);
         fabConsumed.setOnClickListener(this);
+        fabReport.setOnClickListener(this);
+        fabDownload.setOnClickListener(this);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -145,6 +150,15 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         startActivityForResult(intent,CONSUMED);
     }
 
+    @Override
+    public void startReportActivity() {
+        Intent intent = new Intent(this, ReportActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.PROJECT,project);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
 
     @Override
     public void startUpdateSupplierActivity(Supplier supplier) {
@@ -183,6 +197,11 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         startActivityForResult(intent,CONSUMED_UPDATE);
     }
 
+    @Override
+    public void removeSupplierReceive(Supplier supplier) {
+        receivedFragment.removeSupplierReceive(supplier);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -192,6 +211,10 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
             mPresenter.startReceivedActivity();
         }else if(v==fabConsumed){
             mPresenter.startConsumedActivity();
+        }else if(v==fabReport){
+            mPresenter.startReportActivity();
+        }else if(v==fabDownload){
+           // mPresenter.startConsumedActivity();
         }
     }
 

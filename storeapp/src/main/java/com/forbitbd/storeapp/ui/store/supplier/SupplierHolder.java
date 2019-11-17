@@ -30,6 +30,8 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
         ivDelete = itemView.findViewById(R.id.delete);
 
         ivEdit.setOnClickListener(this);
+        ivImage.setOnClickListener(this);
+        ivDelete.setOnClickListener(this);
 
         itemView.setOnClickListener(this);
     }
@@ -53,6 +55,10 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
             getListener().onItemClick(getAdapterPosition());
         }else if(v==ivEdit){
             getListener().onItemUpdate(getAdapterPosition());
+        }else if(v==ivImage){
+            getListener().onImageClick(getAdapterPosition());
+        }else if(v==ivDelete){
+            getListener().onItemRemove(getAdapterPosition());
         }
     }
 }

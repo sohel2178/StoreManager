@@ -41,7 +41,28 @@ public class ConsumedPresenter implements ConsumedContract.Presenter {
     }
 
     @Override
-    public void deleteConsume(Consume receive) {
+    public void deleteConsume(final Consume consume) {
+
+        mView.showProgressDialog();
+
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+
+        client.deleteConsume(consume.getProject(),consume.get_id())
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        mView.hideProgressDialog();
+
+                        if(response.isSuccessful()){
+                            mView.removeFromAdapter(consume);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        mView.hideProgressDialog();
+                    }
+                });
 
     }
 }

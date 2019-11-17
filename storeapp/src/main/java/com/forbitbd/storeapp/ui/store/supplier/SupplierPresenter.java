@@ -3,6 +3,7 @@ package com.forbitbd.storeapp.ui.store.supplier;
 
 import com.forbitbd.storeapp.api.ApiClient;
 import com.forbitbd.storeapp.api.ServiceGenerator;
+import com.forbitbd.storeapp.models.Project;
 import com.forbitbd.storeapp.models.Supplier;
 
 import java.util.List;
@@ -41,5 +42,34 @@ public class SupplierPresenter implements SupplierContract.Presenter {
                         mView.showProgressDialog();
                     }
                 });
+    }
+
+    @Override
+    public void deleteSupplier(final Supplier supplier) {
+        mView.showProgressDialog();
+
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+
+        client.deleteSupplier(supplier.getProject(),supplier.get_id())
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        mView.hideProgressDialog();
+
+                        if(response.isSuccessful()){
+                            mView.removeFromAdapter(supplier);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        mView.hideProgressDialog();
+                    }
+                });
+    }
+
+    @Override
+    public void startSupplierDetailActivity(Supplier supplier) {
+        mView.startSupplierDetailActivity(supplier);
     }
 }

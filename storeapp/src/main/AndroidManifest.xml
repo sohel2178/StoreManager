@@ -9,7 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application android:networkSecurityConfig="@xml/network_config">
-        <activity android:name=".ui.store.consumedAdd.ConsumedActivity"></activity>
+        <activity android:name=".ui.store.report.ReportActivity"></activity>
+        <activity android:name=".ui.store.supplier.supplier_detail.SupplierDetailActivity" />
+        <activity android:name=".ui.store.consumedAdd.ConsumedActivity" />
         <activity android:name=".ui.store.receivedAdd.ReceivedActivity" />
         <activity android:name=".ui.store.StoreActivity" />
         <activity android:name=".ui.store.addSupplier.AddSupplierActivity" />

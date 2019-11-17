@@ -10,14 +10,17 @@ public interface StoreContract {
         void startAddSupplierActivity();
         void startReceivedActivity();
         void startConsumedActivity();
+        void startReportActivity();
     }
 
     interface View{
         void startAddSupplierActivity();
         void startReceivedActivity();
         void startConsumedActivity();
+        void startReportActivity();
         void startUpdateSupplierActivity(Supplier supplier);
         void startUpdateReceiveActivity(Receive receive);
         void startUpdateConsumeActivity(Consume consume);
+        void removeSupplierReceive(Supplier supplier);
     }
 }

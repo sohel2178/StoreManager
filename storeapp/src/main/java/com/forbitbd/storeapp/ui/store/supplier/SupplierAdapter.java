@@ -44,7 +44,7 @@ public class SupplierAdapter extends BaseAdapter<Supplier,SupplierListener,Suppl
         return position;
     }
 
-    private int getPosition(Supplier supplier){
+    public int getPosition(Supplier supplier){
         for (Supplier x:getItems()){
             if(x.get_id().equals(supplier.get_id())){
                 return getItems().indexOf(x);

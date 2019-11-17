@@ -29,6 +29,7 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
         ivImage.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
+        itemView.setOnClickListener(this);
 
     }
 
@@ -51,12 +52,14 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
 
     @Override
     public void onClick(View view) {
-        if(view==ivImage){
-            getListener().onImageClick(getAdapterPosition());
+        if(view==itemView){
+            getListener().onItemClick(getAdapterPosition());
         }else if(view==ivEdit){
             getListener().onItemUpdate(getAdapterPosition());
         }else if(view==ivDelete){
             getListener().onItemRemove(getAdapterPosition());
+        }else if(view==ivImage){
+            getListener().onImageClick(getAdapterPosition());
         }
     }
 }

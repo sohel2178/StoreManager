@@ -14,9 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forbitbd.storeapp.R;
+import com.forbitbd.storeapp.dialog.delete.DeleteDialog;
+import com.forbitbd.storeapp.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.ui.store.StoreBaseFragment;
+import com.forbitbd.storeapp.utils.Constant;
 
 import java.util.List;
 
@@ -43,7 +46,7 @@ public class ConsumedFragment extends StoreBaseFragment implements ConsumedContr
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_received, container, false);
+        View view = inflater.inflate(R.layout.fragment_supplier, container, false);
         initView(view);
         return view;
     }
@@ -70,17 +73,18 @@ public class ConsumedFragment extends StoreBaseFragment implements ConsumedContr
 
     @Override
     public void updateItem(Consume consume) {
-        Log.d("CALLHHHH","CALL updateItem: ");
-        adapter.update(adapter.getPosition(consume));
+        adapter.update(consume,adapter.getPosition(consume));
     }
 
     @Override
     public void removeFromAdapter(Consume consume) {
+        adapter.remove(adapter.getPosition(consume));
 
     }
 
     @Override
     public void onImageClick(int position) {
+        get_activity().startZoomImageActivity(adapter.getItem(position).getImage());
 
     }
 
@@ -95,7 +99,19 @@ public class ConsumedFragment extends StoreBaseFragment implements ConsumedContr
     }
 
     @Override
-    public void onItemRemove(int position) {
+    public void onItemRemove(final int position) {
+        final DeleteDialog deleteDialog = new DeleteDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.CONTENT,"Really want to delete this Item??");
+        deleteDialog.setArguments(bundle);
+        deleteDialog.setListener(new DialogClickListener() {
+            @Override
+            public void positiveButtonClick() {
+                deleteDialog.dismiss();
+                mPresenter.deleteConsume(adapter.getItem(position));
+            }
+        });
 
+        deleteDialog.show(getChildFragmentManager(),"HHH");
     }
 }

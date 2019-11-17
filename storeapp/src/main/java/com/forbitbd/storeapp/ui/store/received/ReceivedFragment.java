@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.dialog.delete.DeleteDialog;
 import com.forbitbd.storeapp.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.models.Receive;
+import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.ui.store.StoreBaseFragment;
+import com.forbitbd.storeapp.ui.store.received.receiveDetail.ReceivedDetail;
 import com.forbitbd.storeapp.utils.Constant;
 
 import java.util.ArrayList;
@@ -106,7 +109,21 @@ public class ReceivedFragment extends StoreBaseFragment implements ReceivedContr
     }
 
     @Override
+    public void removeSupplierReceive(Supplier supplier) {
+        if(adapter!=null){
+            adapter.removeSupplierItems(supplier);
+        }
+    }
+
+    @Override
     public void onItemClick(int position) {
+        Log.d("YYYYYYY","Clicked "+position);
+        ReceivedDetail receivedDetail = new ReceivedDetail();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.RECEIVED,adapter.getItem(position));
+        receivedDetail.setArguments(bundle);
+
+        receivedDetail.show(getChildFragmentManager(),"HHHHH");
 
     }
 

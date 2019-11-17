@@ -1,6 +1,7 @@
 package com.forbitbd.storeapp.ui.store.received;
 
 import com.forbitbd.storeapp.models.Receive;
+import com.forbitbd.storeapp.models.Supplier;
 
 import java.util.List;
 
@@ -20,5 +21,6 @@ public interface ReceivedContract {
         void addItem(Receive receive);
         void updateItem(Receive receive);
         void removeFromAdapter(Receive receive);
+        void removeSupplierReceive(Supplier supplier);
     }
 }

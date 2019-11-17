@@ -1,6 +1,7 @@
 package com.forbitbd.storeapp.ui.store.supplier;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.forbitbd.storeapp.R;
+import com.forbitbd.storeapp.dialog.delete.DeleteDialog;
+import com.forbitbd.storeapp.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.ui.store.StoreBaseFragment;
+import com.forbitbd.storeapp.ui.store.supplier.supplier_detail.SupplierDetailActivity;
+import com.forbitbd.storeapp.utils.Constant;
 
 import java.util.List;
 
@@ -76,8 +81,26 @@ public class SupplierFragment extends StoreBaseFragment
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void removeFromAdapter(Supplier supplier) {
+        adapter.remove(adapter.getPosition(supplier));
 
+        get_activity().removeSupplierReceive(supplier);
+    }
+
+    @Override
+    public void startSupplierDetailActivity(Supplier supplier) {
+
+        Intent intent = new Intent(getContext(), SupplierDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.SUPPLIER,supplier);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        mPresenter.startSupplierDetailActivity(adapter.getItem(position));
     }
 
     @Override
@@ -87,7 +110,25 @@ public class SupplierFragment extends StoreBaseFragment
     }
 
     @Override
-    public void onItemRemove(int position) {
+    public void onItemRemove(final int position) {
+        final DeleteDialog deleteDialog = new DeleteDialog();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.CONTENT,"Do you Really want to delete this Item?? Related Transaction will also be deleted!!!");
+        deleteDialog.setArguments(bundle);
+        deleteDialog.setListener(new DialogClickListener() {
+            @Override
+            public void positiveButtonClick() {
+                deleteDialog.dismiss();
+                mPresenter.deleteSupplier(adapter.getItem(position));
+            }
+        });
 
+        deleteDialog.show(getChildFragmentManager(),"HHH");
+
+    }
+
+    @Override
+    public void onImageClick(int position) {
+        get_activity().startZoomImageActivity(adapter.getItem(position).getImage());
     }
 }
