@@ -15,6 +15,7 @@ import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.StoreResponse;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.ui.store.report.daily.DailyFragment;
+import com.forbitbd.storeapp.ui.store.report.monthly.MonthlyFragment;
 import com.forbitbd.storeapp.ui.store.report.summery.SummeryFragment;
 import com.forbitbd.storeapp.utils.Constant;
 import com.forbitbd.storeapp.utils.PrebaseActivity;
@@ -35,10 +36,11 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
     private List<Receive> receiveList;
     private List<Consume> consumeList;
 
-    private String[] titleArray = {"Summery","Daily Transaction"};
+    private String[] titleArray = {"Summery","Daily Transaction","Monthly Transaction"};
 
     private SummeryFragment summeryFragment;
     private DailyFragment dailyFragment;
+    private MonthlyFragment monthlyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
 
         this.summeryFragment = new SummeryFragment();
         this.dailyFragment = new DailyFragment();
+        this.monthlyFragment = new MonthlyFragment();
 
         tvPrev = findViewById(R.id.prev);
         tvNext = findViewById(R.id.next);
@@ -77,6 +80,7 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
         }
         pagerAdapter.addFragment(summeryFragment,"Summery");
         pagerAdapter.addFragment(dailyFragment,"Daily Transaction");
+        pagerAdapter.addFragment(monthlyFragment,"Monthly Transaction");
 //        pagerAdapter.addFragment(new TrialBalanceFragment(), "Trial Balance");
 //        pagerAdapter.addFragment(new DailyTransactionFragment(), "Daily Transaction");
 //        pagerAdapter.addFragment(new MonthlyTransactionFragment(), "Monthly Transaction");
