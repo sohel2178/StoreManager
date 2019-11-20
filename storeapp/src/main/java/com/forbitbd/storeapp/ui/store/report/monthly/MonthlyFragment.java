@@ -16,8 +16,9 @@ import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.ui.store.report.ReportBase;
+import com.forbitbd.storeapp.ui.store.report.monthly.consume.ConsumeFragment;
+import com.forbitbd.storeapp.ui.store.report.monthly.received.ReceiveFragment;
 import com.forbitbd.storeapp.ui.store.report.monthly.summery.MonthlySummeryFragment;
-import com.forbitbd.storeapp.ui.store.report.monthly.transaction.TransactionFragment;
 import com.forbitbd.storeapp.utils.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -34,7 +35,8 @@ public class MonthlyFragment extends ReportBase implements View.OnClickListener,
 
 
     private MonthlySummeryFragment summeryFragment;
-    private TransactionFragment transactionFragment;
+    private ReceiveFragment receiveFragment;
+    private ConsumeFragment consumeFragment;
 
     TextView tvPrev,tvNext,tvStatus;
     private ViewPager viewPager;
@@ -57,7 +59,8 @@ public class MonthlyFragment extends ReportBase implements View.OnClickListener,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.summeryFragment = new MonthlySummeryFragment();
-        this.transactionFragment = new TransactionFragment();
+        this.receiveFragment = new ReceiveFragment();
+        this.consumeFragment = new ConsumeFragment();
 
         this.currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         this.currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -115,7 +118,8 @@ public class MonthlyFragment extends ReportBase implements View.OnClickListener,
             pagerAdapter.clear();
         }
         pagerAdapter.addFragment(summeryFragment,"Summery");
-        pagerAdapter.addFragment(transactionFragment,"Transactions");
+        pagerAdapter.addFragment(receiveFragment,"Received");
+        pagerAdapter.addFragment(consumeFragment,"Consumed");
        /* pagerAdapter.addFragment(new AccountFragment(), "Accounts");
         pagerAdapter.addFragment(new TransactionFragment(), "Transactions");*/
 
@@ -133,7 +137,8 @@ public class MonthlyFragment extends ReportBase implements View.OnClickListener,
             mPresenter.filterData(get_activity().getReceiveList(),get_activity().getConsumeList(),currentMonth,currentYear);
 
         }else if(v==tvNext){
-
+            increase();
+            mPresenter.filterData(get_activity().getReceiveList(),get_activity().getConsumeList(),currentMonth,currentYear);
         }
     }
 
@@ -165,6 +170,8 @@ public class MonthlyFragment extends ReportBase implements View.OnClickListener,
         this.receiveList = receiveList;
         this.consumeList = consumeList;
         summeryFragment.update();
+        receiveFragment.update();
+        consumeFragment.update();
     }
 
     public List<Receive> getReceiveList(){

@@ -14,6 +14,7 @@ import com.forbitbd.storeapp.models.Project;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.StoreResponse;
 import com.forbitbd.storeapp.models.Supplier;
+import com.forbitbd.storeapp.ui.store.report.chart.ChartFragment;
 import com.forbitbd.storeapp.ui.store.report.daily.DailyFragment;
 import com.forbitbd.storeapp.ui.store.report.monthly.MonthlyFragment;
 import com.forbitbd.storeapp.ui.store.report.summery.SummeryFragment;
@@ -36,11 +37,12 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
     private List<Receive> receiveList;
     private List<Consume> consumeList;
 
-    private String[] titleArray = {"Summery","Daily Transaction","Monthly Transaction"};
+    private String[] titleArray = {"Summery","Daily Transaction","Monthly Transaction","Chart"};
 
     private SummeryFragment summeryFragment;
     private DailyFragment dailyFragment;
     private MonthlyFragment monthlyFragment;
+    private ChartFragment chartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
         this.summeryFragment = new SummeryFragment();
         this.dailyFragment = new DailyFragment();
         this.monthlyFragment = new MonthlyFragment();
+        this.chartFragment = new ChartFragment();
 
         tvPrev = findViewById(R.id.prev);
         tvNext = findViewById(R.id.next);
@@ -77,25 +80,27 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
     private void setupViewPager(ViewPager viewPager) {
         if(pagerAdapter==null){
             pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        }else {
+            pagerAdapter.clear();
         }
         pagerAdapter.addFragment(summeryFragment,"Summery");
         pagerAdapter.addFragment(dailyFragment,"Daily Transaction");
         pagerAdapter.addFragment(monthlyFragment,"Monthly Transaction");
-//        pagerAdapter.addFragment(new TrialBalanceFragment(), "Trial Balance");
-//        pagerAdapter.addFragment(new DailyTransactionFragment(), "Daily Transaction");
-//        pagerAdapter.addFragment(new MonthlyTransactionFragment(), "Monthly Transaction");
-//        pagerAdapter.addFragment(new CashFlowFragment(), "Cash Flow");
-        //pagerAdapter.addFragment(new TransactionFragment(), "Transactions");
-
+        pagerAdapter.addFragment(chartFragment,"Chart");
         viewPager.setAdapter(pagerAdapter);
     }
 
     @Override
     public void onClick(View view) {
         if(view==tvNext){
+            if(viewPager.getCurrentItem()<pagerAdapter.getCount()-1){
+                viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+            }
 
         }else if(view==tvPrev){
-
+            if(viewPager.getCurrentItem()!=0){
+                viewPager.setCurrentItem(viewPager.getCurrentItem()-1);
+            }
         }
     }
 
@@ -129,7 +134,6 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
             @Override
             public void onPageSelected(int position) {
                 tvStatus.setText(titleArray[position]);
-
             }
 
             @Override
@@ -137,6 +141,9 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
 
             }
         });
+
+
+        tvStatus.setText(titleArray[viewPager.getCurrentItem()]);
 
     }
 }

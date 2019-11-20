@@ -18,6 +18,9 @@ import com.forbitbd.storeapp.baseAdapter.BaseListener;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.ReportSummery;
+import com.forbitbd.storeapp.ui.store.report.daily.DailyAdapter;
+import com.forbitbd.storeapp.ui.store.report.daily.DailyContract;
+import com.forbitbd.storeapp.ui.store.report.daily.DailyPresenter;
 import com.forbitbd.storeapp.ui.store.report.monthly.MonthlyFragment;
 import com.forbitbd.storeapp.ui.store.report.summery.SummeryAdapter;
 import com.forbitbd.storeapp.ui.store.report.summery.SummeryContract;
@@ -28,10 +31,10 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MonthlySummeryFragment extends Fragment implements BaseListener, SummeryContract.View {
+public class MonthlySummeryFragment extends Fragment implements BaseListener, DailyContract.View {
 
-    private SummeryAdapter adapter;
-    private SummeryPresenter mPresenter;
+    private DailyAdapter adapter;
+    private DailyPresenter mPresenter;
 
     private MonthlyFragment parent;
 
@@ -43,8 +46,8 @@ public class MonthlySummeryFragment extends Fragment implements BaseListener, Su
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new SummeryPresenter(this);
-        adapter = new SummeryAdapter(getContext(),this);
+        mPresenter = new DailyPresenter(this);
+        adapter = new DailyAdapter(getContext(),this);
 
         if(getParentFragment() instanceof MonthlyFragment){
             parent = (MonthlyFragment) getParentFragment();
@@ -55,7 +58,7 @@ public class MonthlySummeryFragment extends Fragment implements BaseListener, Su
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_summery2, container, false);
+        View view = inflater.inflate(R.layout.fragment_summery3, container, false);
         initView(view);
         return view;
     }
@@ -65,14 +68,13 @@ public class MonthlySummeryFragment extends Fragment implements BaseListener, Su
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        mPresenter.process(parent.getReceiveList(),parent.getConsumeList());
+        mPresenter.processData(parent.getReceiveList(),parent.getConsumeList());
 
     }
 
     public void update(){
         if(mPresenter!=null){
-            adapter.clear();
-            mPresenter.process(parent.getReceiveList(),parent.getConsumeList());
+            mPresenter.processData(parent.getReceiveList(),parent.getConsumeList());
         }
 
 
@@ -94,7 +96,17 @@ public class MonthlySummeryFragment extends Fragment implements BaseListener, Su
     }
 
     @Override
-    public void addToadapter(ReportSummery reportSummery) {
+    public void clearAdapter() {
+        adapter.clear();
+    }
+
+    @Override
+    public void openCalendar() {
+
+    }
+
+    @Override
+    public void addToAdapter(ReportSummery reportSummery) {
         adapter.add(reportSummery);
     }
 }

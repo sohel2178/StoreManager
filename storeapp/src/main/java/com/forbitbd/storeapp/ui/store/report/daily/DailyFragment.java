@@ -90,6 +90,11 @@ public class DailyFragment extends ReportBase implements DailyContract.View, Vie
     }
 
     @Override
+    public void clearAdapter() {
+        adapter.clear();
+    }
+
+    @Override
     public void openCalendar() {
         MyDatePickerFragment myDateDialog = new MyDatePickerFragment();
         Bundle bundle = new Bundle();

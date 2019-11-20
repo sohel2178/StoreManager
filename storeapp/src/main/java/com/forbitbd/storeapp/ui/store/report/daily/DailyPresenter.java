@@ -25,6 +25,7 @@ public class DailyPresenter implements DailyContract.Presenter {
 
     @Override
     public void process(Date date, List<Receive> receiveList, List<Consume> consumeList) {
+        mView.clearAdapter();
         List<Receive> filterReceivedList = getFilteredReceivedList(date,receiveList);
         List<Consume> filterConsumedList = getFilteredConsumedList(date,consumeList);
 
@@ -50,6 +51,31 @@ public class DailyPresenter implements DailyContract.Presenter {
 
         }
 
+    }
+
+    @Override
+    public void processData(List<Receive> receiveList, List<Consume> consumeList) {
+        mView.clearAdapter();
+
+        for (String x: getnameList(receiveList,consumeList)){
+            ReportSummery reportSummery = new ReportSummery();
+            reportSummery.setItem(x);
+
+            for (Receive y: receiveList){
+                if(y.getName().equals(x)){
+                    reportSummery.addReceived(y.getQuantity());
+                }
+            }
+
+            for (Consume z:consumeList){
+                if(z.getName().equals(x)){
+                    reportSummery.addConsumed(z.getQuantity());
+                }
+            }
+
+            mView.addToAdapter(reportSummery);
+
+        }
     }
 
 

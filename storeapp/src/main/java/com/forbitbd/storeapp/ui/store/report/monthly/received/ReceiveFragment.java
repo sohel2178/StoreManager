@@ -1,4 +1,4 @@
-package com.forbitbd.storeapp.ui.store.report.summery;
+package com.forbitbd.storeapp.ui.store.report.monthly.received;
 
 
 import android.os.Bundle;
@@ -14,34 +14,39 @@ import android.view.ViewGroup;
 
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseListener;
-import com.forbitbd.storeapp.models.ReportSummery;
-import com.forbitbd.storeapp.ui.store.report.ReportBase;
+import com.forbitbd.storeapp.models.Receive;
+import com.forbitbd.storeapp.ui.store.report.monthly.MonthlyFragment;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SummeryFragment extends ReportBase implements BaseListener, SummeryContract.View {
+public class ReceiveFragment extends Fragment implements ReceiveContract.View, BaseListener {
 
-    private SummeryAdapter adapter;
-    private SummeryPresenter mPresenter;
+    private ReceivePresenter mPresenter;
+    private ReceiveAdapter adapter;
+
+    private MonthlyFragment parent;
 
 
-    public SummeryFragment() {
+    public ReceiveFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new SummeryAdapter(getContext(),this);
-        mPresenter = new SummeryPresenter(this);
+        mPresenter = new ReceivePresenter(this);
+        this.adapter = new ReceiveAdapter(getContext(),this);
+        this.parent = (MonthlyFragment) getParentFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_summery2, container, false);
+        View view = inflater.inflate(R.layout.fragment_receive, container, false);
         initView(view);
         return view;
     }
@@ -51,7 +56,13 @@ public class SummeryFragment extends ReportBase implements BaseListener, Summery
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        mPresenter.process(get_activity().getReceiveList(),get_activity().getConsumeList());
+        mPresenter.process(parent.getReceiveList());
+    }
+
+    public void update(){
+        if(mPresenter!=null){
+            mPresenter.process(parent.getReceiveList());
+        }
     }
 
     @Override
@@ -75,7 +86,7 @@ public class SummeryFragment extends ReportBase implements BaseListener, Summery
     }
 
     @Override
-    public void addToadapter(ReportSummery reportSummery) {
-        adapter.add(reportSummery);
+    public void addItem(Receive receive) {
+        adapter.add(receive);
     }
 }

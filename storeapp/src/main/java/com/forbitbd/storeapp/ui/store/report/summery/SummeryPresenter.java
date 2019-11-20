@@ -21,7 +21,7 @@ public class SummeryPresenter implements SummeryContract.Presenter {
     @Override
     public void process(List<Receive> receiveList, List<Consume> consumeList) {
 
-        List<ReportSummery> reportSummeryList = new ArrayList<>();
+        mView.clearAdapter();
 
         for (String x: getnameList(receiveList,consumeList)){
             ReportSummery reportSummery = new ReportSummery();

@@ -12,6 +12,7 @@ public interface SummeryContract {
     }
 
     interface View{
+        void clearAdapter();
         void addToadapter(ReportSummery reportSummery);
     }
 }

@@ -90,7 +90,7 @@ public class MyUtil {
     }
 
     public static int getDuration(long fDate,long sDate){
-        long diff = fDate-sDate;
+        long diff = Math.abs(fDate-sDate);
         return (int) (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+1);
     }
 

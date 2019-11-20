@@ -12,9 +12,11 @@ public interface DailyContract {
     interface Presenter{
         void openCalendar();
         void process(Date date, List<Receive> receiveList, List<Consume> consumeList);
+        void processData(List<Receive> receiveList,List<Consume> consumeList);
     }
 
     interface View{
+        void clearAdapter();
         void openCalendar();
         void addToAdapter(ReportSummery reportSummery);
     }

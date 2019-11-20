@@ -18,19 +18,19 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="DATE"
+                android:textStyle="bold"
+                android:padding="@dimen/small_padding"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="ITEM"
+                android:text="MATERIAL"
                 android:textStyle="bold"
-                android:padding="@dimen/small_padding"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="RECEIVED"
-                android:textStyle="bold"
-                android:gravity="center_vertical|end"
+                android:gravity="center_vertical"
                 android:padding="@dimen/small_padding"
                 android:textSize="16sp"/>
 
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center_vertical|end"
-                android:text="CONSUMED"
+                android:text="QUANTITY"
                 android:textStyle="bold"
                 android:padding="@dimen/small_padding"
                 android:textSize="16sp"/>

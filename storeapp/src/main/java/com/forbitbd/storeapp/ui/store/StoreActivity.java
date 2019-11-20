@@ -101,6 +101,8 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
 
         if(pagerAdapter==null){
             pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        }else{
+            pagerAdapter.clear();
         }
         pagerAdapter.addFragment(supplierFragment,"Suppliers");
         pagerAdapter.addFragment(receivedFragment,"Received");
