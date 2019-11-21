@@ -12,13 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.utils.Constant;
-import com.forbitbd.storeapp.utils.MyUtil;
 import com.google.android.material.button.MaterialButton;
 
 /**

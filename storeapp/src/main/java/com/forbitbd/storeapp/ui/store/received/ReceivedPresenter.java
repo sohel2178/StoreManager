@@ -1,7 +1,7 @@
 package com.forbitbd.storeapp.ui.store.received;
 
+import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.storeapp.api.ApiClient;
-import com.forbitbd.storeapp.api.ServiceGenerator;
 import com.forbitbd.storeapp.models.Receive;
 
 import java.util.List;

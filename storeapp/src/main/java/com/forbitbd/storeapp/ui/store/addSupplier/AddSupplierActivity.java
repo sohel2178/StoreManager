@@ -12,12 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.forbitbd.androidutils.utils.MyUtil;
+import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Project;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.utils.Constant;
-import com.forbitbd.storeapp.utils.MyUtil;
-import com.forbitbd.storeapp.utils.PrebaseActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -56,7 +56,7 @@ public class AddSupplierActivity extends PrebaseActivity implements AddSupplierC
     }
 
     private void initView() {
-        setupToolbar();
+        setupToolbar(R.id.toolbar);
 
         if(supplier !=null){
             getSupportActionBar().setTitle("Update Supplier");

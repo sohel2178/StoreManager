@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
@@ -19,7 +20,6 @@ import com.forbitbd.storeapp.ui.store.report.ReportBase;
 import com.forbitbd.storeapp.ui.store.report.monthly.consume.ConsumeFragment;
 import com.forbitbd.storeapp.ui.store.report.monthly.received.ReceiveFragment;
 import com.forbitbd.storeapp.ui.store.report.monthly.summery.MonthlySummeryFragment;
-import com.forbitbd.storeapp.utils.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;

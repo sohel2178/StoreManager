@@ -2,8 +2,8 @@ package com.forbitbd.storeapp.ui.store.addSupplier;
 
 
 
+import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.storeapp.api.ApiClient;
-import com.forbitbd.storeapp.api.ServiceGenerator;
 import com.forbitbd.storeapp.models.Supplier;
 
 import java.util.HashMap;

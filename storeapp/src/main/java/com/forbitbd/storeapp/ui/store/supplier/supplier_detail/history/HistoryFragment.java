@@ -8,16 +8,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.dialog.delete.DeleteDialog;
-import com.forbitbd.storeapp.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.models.Receive;
-import com.forbitbd.storeapp.models.Summery;
 import com.forbitbd.storeapp.ui.store.received.ReceiveAdapter;
 import com.forbitbd.storeapp.ui.store.received.ReceiveListener;
 import com.forbitbd.storeapp.ui.store.received.receiveDetail.ReceivedDetail;

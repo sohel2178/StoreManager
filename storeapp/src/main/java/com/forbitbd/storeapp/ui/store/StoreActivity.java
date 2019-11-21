@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forbitbd.androidutils.utils.PrebaseActivity;
+import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Project;
@@ -27,14 +29,11 @@ import com.forbitbd.storeapp.ui.store.receivedAdd.ReceivedActivity;
 import com.forbitbd.storeapp.ui.store.report.ReportActivity;
 import com.forbitbd.storeapp.ui.store.supplier.SupplierFragment;
 import com.forbitbd.storeapp.utils.Constant;
-import com.forbitbd.storeapp.utils.PrebaseActivity;
-import com.forbitbd.storeapp.utils.ViewPagerAdapter;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class StoreActivity extends PrebaseActivity implements StoreContract.View, View.OnClickListener {
 
@@ -56,7 +55,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private SupplierFragment supplierFragment;
     private ConsumedFragment consumedFragment;
     private ReceivedFragment receivedFragment;
-    private FloatingActionButton fabCreateSupplier,fabReceived,fabConsumed,fabReport,fabDownload;
+    private FloatingActionButton fabCreateSupplier,fabReceived,fabConsumed,fabReport;
 
 
     @Override
@@ -72,7 +71,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     }
 
     private void initView(){
-        setupToolbar();
+        setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(project.getName().concat(" | Store"));
 
         supplierFragment = new SupplierFragment();
@@ -89,13 +88,11 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         fabReceived = findViewById(R.id.fab_received);
         fabConsumed = findViewById(R.id.fab_consumed);
         fabReport = findViewById(R.id.fab_report);
-        fabDownload = findViewById(R.id.fab_download);
 
         fabCreateSupplier.setOnClickListener(this);
         fabReceived.setOnClickListener(this);
         fabConsumed.setOnClickListener(this);
         fabReport.setOnClickListener(this);
-        fabDownload.setOnClickListener(this);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -268,8 +265,6 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
             mPresenter.startConsumedActivity();
         }else if(v==fabReport){
             mPresenter.startReportActivity();
-        }else if(v==fabDownload){
-           // mPresenter.startConsumedActivity();
         }
     }
 

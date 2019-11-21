@@ -15,15 +15,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.forbitbd.androidutils.dialog.DatePickerListener;
+import com.forbitbd.androidutils.dialog.MyDatePickerFragment;
+import com.forbitbd.androidutils.utils.MyUtil;
+import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.dialog.DatePickerListener;
-import com.forbitbd.storeapp.dialog.MyDatePickerFragment;
 import com.forbitbd.storeapp.models.Project;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.utils.Constant;
-import com.forbitbd.storeapp.utils.MyUtil;
-import com.forbitbd.storeapp.utils.PrebaseActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
@@ -75,7 +75,7 @@ public class ReceivedActivity extends PrebaseActivity
     }
 
     private void initView() {
-        setupToolbar();
+        setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle("Material Received Form");
 
         spSupplier = findViewById(R.id.sp_supplier);

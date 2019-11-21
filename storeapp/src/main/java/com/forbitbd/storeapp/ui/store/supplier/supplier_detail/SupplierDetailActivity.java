@@ -6,14 +6,14 @@ import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
+import com.forbitbd.androidutils.utils.PrebaseActivity;
+import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.ui.store.supplier.supplier_detail.history.HistoryFragment;
 import com.forbitbd.storeapp.ui.store.supplier.supplier_detail.summery.SummeryFragment;
 import com.forbitbd.storeapp.utils.Constant;
-import com.forbitbd.storeapp.utils.PrebaseActivity;
-import com.forbitbd.storeapp.utils.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class SupplierDetailActivity extends PrebaseActivity implements SupplierD
     }
 
     private void initView() {
-        setupToolbar();
+        setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(supplier.getName().concat(" Details"));
 
         tvTransactionCount = findViewById(R.id.transaction_count);

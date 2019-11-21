@@ -1,13 +1,13 @@
 package com.forbitbd.storeapp.ui.store.report;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forbitbd.androidutils.utils.PrebaseActivity;
+import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Project;
@@ -19,8 +19,6 @@ import com.forbitbd.storeapp.ui.store.report.daily.DailyFragment;
 import com.forbitbd.storeapp.ui.store.report.monthly.MonthlyFragment;
 import com.forbitbd.storeapp.ui.store.report.summery.SummeryFragment;
 import com.forbitbd.storeapp.utils.Constant;
-import com.forbitbd.storeapp.utils.PrebaseActivity;
-import com.forbitbd.storeapp.utils.ViewPagerAdapter;
 
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
     }
 
     private void initView() {
-        setupToolbar();
+        setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(project.getName().concat(" Store Report"));
 
         this.summeryFragment = new SummeryFragment();

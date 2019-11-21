@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.forbitbd.androidutils.dialog.delete.DeleteDialog;
+import com.forbitbd.androidutils.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.dialog.delete.DeleteDialog;
-import com.forbitbd.storeapp.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.ui.store.StoreBaseFragment;
 import com.forbitbd.storeapp.ui.store.supplier.supplier_detail.SupplierDetailActivity;

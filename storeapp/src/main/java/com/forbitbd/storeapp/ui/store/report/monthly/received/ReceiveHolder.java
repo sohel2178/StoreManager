@@ -3,11 +3,11 @@ package com.forbitbd.storeapp.ui.store.report.monthly.received;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 import com.forbitbd.storeapp.baseAdapter.BaseListener;
 import com.forbitbd.storeapp.models.Receive;
-import com.forbitbd.storeapp.utils.MyUtil;
 
 public class ReceiveHolder extends BaseHolder<Receive, BaseListener> {
 

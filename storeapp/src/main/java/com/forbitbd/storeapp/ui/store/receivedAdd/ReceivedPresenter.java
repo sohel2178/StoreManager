@@ -1,11 +1,9 @@
 package com.forbitbd.storeapp.ui.store.receivedAdd;
 
-import android.util.Log;
-
+import com.forbitbd.androidutils.api.ServiceGenerator;
+import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.storeapp.api.ApiClient;
-import com.forbitbd.storeapp.api.ServiceGenerator;
 import com.forbitbd.storeapp.models.Receive;
-import com.forbitbd.storeapp.utils.MyUtil;
 
 import java.util.HashMap;
 
