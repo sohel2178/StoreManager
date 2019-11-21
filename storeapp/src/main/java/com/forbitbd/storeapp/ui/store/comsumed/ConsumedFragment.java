@@ -19,6 +19,8 @@ import com.forbitbd.storeapp.dialog.delete.DialogClickListener;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.ui.store.StoreBaseFragment;
+import com.forbitbd.storeapp.ui.store.comsumed.consumeDetail.ConsumeDetail;
+import com.forbitbd.storeapp.ui.store.received.receiveDetail.ReceivedDetail;
 import com.forbitbd.storeapp.utils.Constant;
 
 import java.util.List;
@@ -90,7 +92,11 @@ public class ConsumedFragment extends StoreBaseFragment implements ConsumedContr
 
     @Override
     public void onItemClick(int position) {
-
+        ConsumeDetail consumeDetail = new ConsumeDetail();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.CONSUME,adapter.getItem(position));
+        consumeDetail.setArguments(bundle);
+        consumeDetail.show(getChildFragmentManager(),"HHHHH");
     }
 
     @Override
@@ -113,5 +119,9 @@ public class ConsumedFragment extends StoreBaseFragment implements ConsumedContr
         });
 
         deleteDialog.show(getChildFragmentManager(),"HHH");
+    }
+
+    public void filter(String query){
+        adapter.getFilter().filter(query);
     }
 }

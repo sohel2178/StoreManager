@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -13,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseAdapter<T, L extends BaseListener,VH extends BaseHolder<T,L>> extends RecyclerView.Adapter<VH> {
+public abstract class BaseAdapter<T, L extends BaseListener,VH extends BaseHolder<T,L>> extends RecyclerView.Adapter<VH>  {
 
     private List<T> items;
     private L listener;
@@ -81,6 +83,7 @@ public abstract class BaseAdapter<T, L extends BaseListener,VH extends BaseHolde
         this.items = items;
         notifyDataSetChanged();
     }
+
 
     public List<T> getItems(){
         return items;

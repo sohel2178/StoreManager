@@ -154,4 +154,8 @@ public class ReceivedFragment extends StoreBaseFragment implements ReceivedContr
         Receive receive = adapter.getItem(position);
         get_activity().startZoomImageActivity(receive.getImage());
     }
+
+    public void filter(String query){
+        adapter.getFilter().filter(query);
+    }
 }

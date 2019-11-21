@@ -131,4 +131,8 @@ public class SupplierFragment extends StoreBaseFragment
     public void onImageClick(int position) {
         get_activity().startZoomImageActivity(adapter.getItem(position).getImage());
     }
+
+    public void filter(String query){
+        adapter.getFilter().filter(query);
+    }
 }

@@ -47,9 +47,9 @@
                 android:gravity="center"
                 android:layout_centerVertical="true"
                 android:text="status"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:id="@+id/status"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/nonClickable"/>
 
             <TextView
                 android:layout_width="wrap_content"

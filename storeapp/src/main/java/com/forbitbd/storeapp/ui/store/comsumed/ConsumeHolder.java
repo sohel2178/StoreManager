@@ -30,6 +30,7 @@ public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implement
         ivImage.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
+        itemView.setOnClickListener(this);
     }
 
     @Override
@@ -57,6 +58,8 @@ public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implement
             getListener().onItemUpdate(getAdapterPosition());
         }else if(view==ivDelete){
             getListener().onItemRemove(getAdapterPosition());
+        }else if(view==itemView){
+            getListener().onItemClick(getAdapterPosition());
         }
     }
 }

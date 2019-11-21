@@ -2,6 +2,8 @@ package com.forbitbd.storeapp.ui.store.supplier;
 
 import android.content.Context;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 
@@ -9,8 +11,13 @@ import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseAdapter;
 import com.forbitbd.storeapp.models.Supplier;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class SupplierAdapter extends BaseAdapter<Supplier,SupplierListener,SupplierHolder> {
+
+public class SupplierAdapter extends BaseAdapter<Supplier,SupplierListener,SupplierHolder> implements Filterable {
+
+    private List<Supplier> originalList;
 
     public SupplierAdapter(Context context, SupplierListener listener) {
         super(context, listener);
@@ -52,5 +59,45 @@ public class SupplierAdapter extends BaseAdapter<Supplier,SupplierListener,Suppl
         }
 
         return -1;
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(originalList==null){
+            originalList = getItems();
+        }
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+
+                List<Supplier> filteredList = new ArrayList<>();
+
+                if(charString.isEmpty()){
+                    filteredList = originalList;
+                }else{
+                    List<Supplier> tmpList = new ArrayList<>();
+                    for (Supplier x: originalList){
+                        if(x.getName().toLowerCase().contains(charString.toLowerCase())){
+                            tmpList.add(x);
+                        }
+                    }
+
+                    filteredList = tmpList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values=filteredList;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                setItems((List<Supplier>) results.values);
+
+            }
+        };
     }
 }

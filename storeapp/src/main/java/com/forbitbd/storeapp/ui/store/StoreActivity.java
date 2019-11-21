@@ -2,11 +2,16 @@ package com.forbitbd.storeapp.ui.store;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.forbitbd.storeapp.R;
@@ -51,11 +56,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private SupplierFragment supplierFragment;
     private ConsumedFragment consumedFragment;
     private ReceivedFragment receivedFragment;
-
     private FloatingActionButton fabCreateSupplier,fabReceived,fabConsumed,fabReport,fabDownload;
-
-
-
 
 
     @Override
@@ -95,6 +96,40 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         fabConsumed.setOnClickListener(this);
         fabReport.setOnClickListener(this);
         fabDownload.setOnClickListener(this);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                changeQueryText(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+    private void changeQueryText(int position){
+        switch (position){
+            case 0:
+                searchView.setQueryHint("Search Supplier by Name");
+                break;
+
+            case 1:
+                searchView.setQueryHint("Search By Name or Invoice");
+                break;
+
+            case 2:
+                searchView.setQueryHint("Search By Name, Issue to, Where Used");
+                break;
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -204,6 +239,24 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         receivedFragment.removeSupplierReceive(supplier);
     }
 
+    @Override
+    public void filter(String query) {
+        switch (viewPager.getCurrentItem()){
+            case 0:
+                supplierFragment.filter(query);
+                break;
+
+            case 1:
+                receivedFragment.filter(query);
+                break;
+
+            case 2:
+                consumedFragment.filter(query);
+                break;
+        }
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -255,5 +308,37 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         }
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        MenuItem searchMenuItem =  menu.findItem(R.id.search);
+
+        Drawable drawable = searchMenuItem.getIcon();
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, ContextCompat.getColor(this,android.R.color.white));
+        searchMenuItem.setIcon(drawable);
+
+        searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setQueryHint("Search Supplier by Name");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                mPresenter.filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mPresenter.filter(newText);
+                return false;
+            }
+        });
+
+
+        return true;
     }
 }

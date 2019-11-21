@@ -1,10 +1,9 @@
 package com.forbitbd.storeapp.ui.store.report.chart;
 
 
-import android.util.Log;
+
 
 import com.forbitbd.storeapp.models.Consume;
-import com.forbitbd.storeapp.models.LineData;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.utils.MyUtil;
 
@@ -43,95 +42,70 @@ public class ChartPresenter implements ChartContract.Presenter {
         List<Receive> filteredReceiveList = getFilteredReceiveList(name,receiveList);
         List<Consume> filteredConsumeList = getFilteredConsumeList(name,consumeList);
 
-        List<LineData> receivedDataList = new ArrayList<>();
+        Date actualStartDate,actualEndDate,receivedStartDate,receivedEndDate,consumeEndDate,consumeStartDate;
 
-        if(filteredReceiveList.size()>0){
-            Date endDate = filteredReceiveList.get(0).getDate();
-            Date startDate = filteredReceiveList.get(filteredReceiveList.size()-1).getDate();
 
-            int duration = MyUtil.getDuration(endDate.getTime(),startDate.getTime());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime (startDate);
+        if(filteredReceiveList.size()==0 && filteredConsumeList.size()==0){
+            return;
+        }else if(filteredReceiveList.size()!=0 && filteredConsumeList.size()==0){
+            receivedStartDate = filteredReceiveList.get(filteredReceiveList.size()-1).getDate();
+            receivedEndDate = filteredReceiveList.get(0).getDate();
 
-            Log.d("DURATION","RECEIVE "+duration);
-
-            for (int i=0;i<duration;i++){
-                if(i==0){
-                    LineData lineData = new LineData(startDate);
-
-                    for (Receive x: receiveList){
-                        if(MyUtil.getStringDate(x.getDate()).equals(MyUtil.getStringDate(lineData.getDate()))){
-                            lineData.addValue((float) x.getQuantity());
-                        }
-                    }
-                    receivedDataList.add(lineData);
-                }else{
-                    cal.add(Calendar.DATE,1);
-                    LineData lineData = new LineData(cal.getTime());
-                    lineData.setValue(receivedDataList.get(i-1).getValue());
-
-                    for (Receive x: receiveList){
-                        if(MyUtil.getStringDate(x.getDate()).equals(MyUtil.getStringDate(lineData.getDate()))){
-                            lineData.addValue((float) x.getQuantity());
-                        }
-                    }
-
-                    receivedDataList.add(lineData);
-                }
-
-            }
-
-            if(receivedDataList.size()>0){
-                mView.updateReceive(receivedDataList);
-            }
+            consumeEndDate = receivedEndDate;
+            consumeStartDate = receivedStartDate;
+        }else if(filteredReceiveList.size()==0 && filteredConsumeList.size()!=0){
+            consumeEndDate = filteredConsumeList.get(0).getDate();
+            consumeStartDate = filteredConsumeList.get(filteredConsumeList.size()-1).getDate();
+            receivedStartDate = consumeStartDate;
+            receivedEndDate = consumeEndDate;
+        }else{
+             receivedStartDate = filteredReceiveList.get(filteredReceiveList.size()-1).getDate();
+             receivedEndDate = filteredReceiveList.get(0).getDate();
+             consumeEndDate = filteredConsumeList.get(0).getDate();
+             consumeStartDate = filteredConsumeList.get(filteredConsumeList.size()-1).getDate();
         }
 
 
-        List<LineData> consumeLineDataList = new ArrayList<>();
+        actualStartDate = new Date(Math.min(receivedStartDate.getTime(),consumeStartDate.getTime()));
+        actualEndDate = new Date(Math.max(receivedEndDate.getTime(),consumeEndDate.getTime()));
 
-        if(filteredConsumeList.size()>0){
-            Date eDate = filteredConsumeList.get(0).getDate();
-            Date sDate = filteredConsumeList.get(filteredConsumeList.size()-1).getDate();
+        int duration = MyUtil.getDuration(actualEndDate.getTime(),actualStartDate.getTime());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime (actualStartDate);
 
-            int duration = MyUtil.getDuration(eDate.getTime(),sDate.getTime());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime (sDate);
+        List<Float> rList = new ArrayList<>();
+        List<Float> cList = new ArrayList<>();
+        List<Date> dateList = new ArrayList<>();
 
-            Log.d("DURATION","CONSUME "+duration);
+        for (int i=0;i<duration;i++){
+            float receive =0;
+            float consume =0;
 
-            for (int i=0;i<duration;i++){
+            if(i!=0){
+                cal.add(Calendar.DATE,1);
+                receive = rList.get(i-1);
+                consume = cList.get(i-1);
+            }
 
-                if(i==0){
-                    LineData lineData = new LineData(sDate);
+            dateList.add(cal.getTime());
 
-                    for (Consume x: consumeList){
-                        if(MyUtil.getStringDate(x.getDate()).equals(MyUtil.getStringDate(lineData.getDate()))){
-                            lineData.addValue((float) x.getQuantity());
-                        }
-                    }
-                    consumeLineDataList.add(lineData);
-                }else{
-                    cal.add(Calendar.DATE,1);
-                    LineData lineData = new LineData(cal.getTime());
-                    lineData.setValue(consumeLineDataList.get(i-1).getValue());
-
-                    for (Consume x: consumeList){
-                        if(MyUtil.getStringDate(x.getDate()).equals(MyUtil.getStringDate(lineData.getDate()))){
-                            lineData.addValue((float) x.getQuantity());
-                        }
-                    }
-
-                    consumeLineDataList.add(lineData);
-
+            for (Receive x: filteredReceiveList){
+                if(MyUtil.getStringDate(x.getDate()).equals(MyUtil.getStringDate(cal.getTime()))){
+                    receive = (float) (receive+x.getQuantity());
                 }
-
             }
 
-            if(consumeLineDataList.size()>0){
-                mView.updateConsume(consumeLineDataList);
+            for (Consume x: filteredConsumeList){
+                if(MyUtil.getStringDate(x.getDate()).equals(MyUtil.getStringDate(cal.getTime()))){
+                    consume = (float) (consume+x.getQuantity());
+                }
             }
 
+            rList.add(receive);
+            cList.add(consume);
         }
+
+        mView.updateChart(dateList,rList,cList);
 
     }
 

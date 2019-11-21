@@ -16,7 +16,7 @@
             android:textSize="20sp"
             android:id="@+id/title"
             android:padding="@dimen/medium_padding"
-            android:text="@string/received_detail"
+            android:text="@string/consume_detail"
             android:textStyle="bold"
             android:textColor="@color/nonClickable"/>
 
@@ -82,11 +82,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/small_padding"
-                    android:text="@string/invoice_no"
+                    android:text="@string/issue_to"
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/invoice_no"
+                    android:id="@+id/issue_to"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -105,11 +105,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/small_padding"
-                    android:text="@string/supplier_name"
+                    android:text="@string/where_used"
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/supplier_name"
+                    android:id="@+id/where_used"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

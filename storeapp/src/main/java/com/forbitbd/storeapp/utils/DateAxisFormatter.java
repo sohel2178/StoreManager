@@ -26,11 +26,6 @@ public class DateAxisFormatter implements IAxisValueFormatter {
         if(index>=dateList.size()){
             index = dateList.size()-1;
         }
-
-
-        String date = dateList.get(index);
-        String[] yyy = date.split("-");
-        String newDate = yyy[0]+"-"+yyy[1];
-        return newDate;
+        return dateList.get(index);
     }
 }

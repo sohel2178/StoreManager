@@ -27,4 +27,9 @@ public class StorePresenter implements StoreContract.Presenter {
     public void startReportActivity() {
         mView.startReportActivity();
     }
+
+    @Override
+    public void filter(String query) {
+        mView.filter(query);
+    }
 }

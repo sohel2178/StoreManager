@@ -1,9 +1,9 @@
 package com.forbitbd.storeapp.ui.store.report.chart;
 
 import com.forbitbd.storeapp.models.Consume;
-import com.forbitbd.storeapp.models.LineData;
 import com.forbitbd.storeapp.models.Receive;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,7 +16,6 @@ public interface ChartContract {
 
     interface View{
         void updateMaterialAdapter(List<String> nameList);
-        void updateReceive(List<LineData> lineDataList);
-        void updateConsume(List<LineData> lineDataList);
+        void updateChart(List<Date> dateList,List<Float> receiveList,List<Float> consumeList);
     }
 }

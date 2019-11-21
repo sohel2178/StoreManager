@@ -37,7 +37,7 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
     private List<Receive> receiveList;
     private List<Consume> consumeList;
 
-    private String[] titleArray = {"Summery","Daily Transaction","Monthly Transaction","Chart"};
+    private String[] titleArray = {"Summery","Daily Transaction","Monthly Transaction","Receive-Consume Comparison"};
 
     private SummeryFragment summeryFragment;
     private DailyFragment dailyFragment;
@@ -86,7 +86,7 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
         pagerAdapter.addFragment(summeryFragment,"Summery");
         pagerAdapter.addFragment(dailyFragment,"Daily Transaction");
         pagerAdapter.addFragment(monthlyFragment,"Monthly Transaction");
-        pagerAdapter.addFragment(chartFragment,"Chart");
+        pagerAdapter.addFragment(chartFragment,"Receive-Consume Comparison");
         viewPager.setAdapter(pagerAdapter);
     }
 

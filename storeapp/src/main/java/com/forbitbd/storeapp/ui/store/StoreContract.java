@@ -11,6 +11,7 @@ public interface StoreContract {
         void startReceivedActivity();
         void startConsumedActivity();
         void startReportActivity();
+        void filter(String query);
     }
 
     interface View{
@@ -22,5 +23,6 @@ public interface StoreContract {
         void startUpdateReceiveActivity(Receive receive);
         void startUpdateConsumeActivity(Consume consume);
         void removeSupplierReceive(Supplier supplier);
+        void filter(String query);
     }
 }

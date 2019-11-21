@@ -15,19 +15,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.models.LineData;
 import com.forbitbd.storeapp.ui.store.report.ReportBase;
 import com.forbitbd.storeapp.utils.DateAxisFormatter;
 import com.forbitbd.storeapp.utils.MyUtil;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -41,7 +42,7 @@ public class ChartFragment extends ReportBase implements ChartContract.View {
     private AppCompatSpinner spMaterial;
     private ArrayAdapter<String> materialAdapter;
 
-    private LineChart mReceiveChart,mConsumeChart;
+    private LineChart mReceiveChart;
 
 
     public ChartFragment() {
@@ -68,23 +69,15 @@ public class ChartFragment extends ReportBase implements ChartContract.View {
         spMaterial = view.findViewById(R.id.sp_material);
 
         mReceiveChart = view.findViewById(R.id.receive_chart);
-        mReceiveChart.getDescription().setEnabled(false);
+        mReceiveChart.getDescription().setEnabled(true);
+
+
+        //legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+
         mReceiveChart.setPinchZoom(true);
-        // mBarChart.setOnChartValueSelectedListener(this);
         mReceiveChart.setDrawGridBackground(false);
         mReceiveChart.getLegend().setEnabled(false);
-        //mLineChart.setViewPortOffsets(60, 0, 50, 60);
-        mReceiveChart.setExtraOffsets(5, 5, 5, 5);
-
-
-        mConsumeChart = view.findViewById(R.id.consume_chart);
-        mConsumeChart.getDescription().setEnabled(false);
-        mConsumeChart.setPinchZoom(true);
-        // mBarChart.setOnChartValueSelectedListener(this);
-        mConsumeChart.setDrawGridBackground(false);
-        mConsumeChart.getLegend().setEnabled(false);
-        //mLineChart.setViewPortOffsets(60, 0, 50, 60);
-        mConsumeChart.setExtraOffsets(5, 5, 5, 5);
+        mReceiveChart.setExtraOffsets(5, 5, 5, 10);
 
         spMaterial.setAdapter(materialAdapter);
         mPresenter.generateNameArray(get_activity().getReceiveList(),get_activity().getConsumeList());
@@ -104,29 +97,23 @@ public class ChartFragment extends ReportBase implements ChartContract.View {
 
     @Override
     public void updateMaterialAdapter(List<String> nameList) {
+        materialAdapter.clear();
         materialAdapter.addAll(nameList);
 
         //
     }
 
 
+
     @Override
-    public void updateReceive(List<LineData> lineDataList) {
-        updateChart(lineDataList,mReceiveChart);
-    }
-
-    public void updateChart(List<LineData> lineDataList,LineChart lineChart){
+    public void updateChart(List<Date> dateList, List<Float> receiveList, List<Float> consumeList) {
         final List<String> xAxisLabels = new ArrayList<>();
-        ArrayList<Entry> yVals1 = new ArrayList<>();
-        for (LineData x: lineDataList) {
-            yVals1.add(new Entry(lineDataList.indexOf(x), (float) x.getValue()));
-            xAxisLabels.add(MyUtil.getStringDate(x.getDate()));
+        for (Date x: dateList){
+            xAxisLabels.add(MyUtil.getStringDate(x));
         }
-
-
         IAxisValueFormatter xAxisFormatter = new DateAxisFormatter(xAxisLabels);
 
-        XAxis xAxis = lineChart.getXAxis();
+        XAxis xAxis = mReceiveChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setLabelRotationAngle(90f);
         //xAxis.setTypeface(mTfLight);
@@ -138,7 +125,7 @@ public class ChartFragment extends ReportBase implements ChartContract.View {
         xAxis.setValueFormatter(xAxisFormatter);
 
 
-        YAxis leftAxis = lineChart.getAxisLeft();
+        YAxis leftAxis = mReceiveChart.getAxisLeft();
         //leftAxis.setTypeface(mTfLight);
         leftAxis.setLabelCount(8, false);
         //leftAxis.setValueFormatter(custom);
@@ -148,30 +135,51 @@ public class ChartFragment extends ReportBase implements ChartContract.View {
         //leftAxis.setAxisMaximum((float) (getVolumeofWorks()+100));
 
         // Disable Right Axis
-        lineChart.getAxisRight().setEnabled(false);
+        mReceiveChart.getAxisRight().setEnabled(false);
 
+        ArrayList<Entry> receiveValues = new ArrayList<>();
+        ArrayList<Entry> consumeValues = new ArrayList<>();
 
+        for (int i=0;i<receiveList.size();i++){
+            receiveValues.add(new Entry(i,receiveList.get(i)));
+        }
 
-        LineDataSet dataSet = new LineDataSet(yVals1,"Cumulative Receive");
-        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSet.setDrawCircleHole(false);
-        dataSet.setDrawCircles(false);
-        dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        dataSet.setDrawValues(false);
-        dataSet.setLineWidth(2);
+        for (int i=0;i<consumeList.size();i++){
+            consumeValues.add(new Entry(i,consumeList.get(i)));
+        }
 
+        LineDataSet receiveSet = new LineDataSet(receiveValues,"Cumulative Receive");
+        receiveSet.setColor(Color.parseColor("#09af00"));
+        receiveSet.setDrawCircleHole(false);
+        receiveSet.setDrawCircles(false);
+        receiveSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        receiveSet.setDrawValues(false);
+        receiveSet.setLineWidth(3);
 
-        com.github.mikephil.charting.data.LineData data = new com.github.mikephil.charting.data.LineData(dataSet);
-        data.setValueTextSize(10f);
+        LineDataSet consumeSet = new LineDataSet(consumeValues,"Cumulative Consume");
+        consumeSet.setColor(Color.parseColor("#b00020"));
+        consumeSet.setDrawCircleHole(false);
+        consumeSet.setDrawCircles(false);
+        consumeSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        consumeSet.setDrawValues(false);
+        consumeSet.setLineWidth(3);
+
+        LineData lineData = new LineData();
+        lineData.addDataSet(receiveSet);
+        lineData.addDataSet(consumeSet);
+
+        lineData.setValueTextSize(10f);
         //data.setValueTypeface(mTfLight);
-        lineChart.setData(data);
-        lineChart.animateXY(1000,1000);
-        lineChart.invalidate();
+        mReceiveChart.setData(lineData);
 
-    }
-
-    @Override
-    public void updateConsume(List<LineData> lineDataList) {
-        updateChart(lineDataList,mConsumeChart);
+        Legend legend = mReceiveChart.getLegend();
+        legend.setEnabled(true);
+        legend.setTextSize(14f);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        mReceiveChart.setDescription(null);
+        mReceiveChart.animateXY(1000,1000);
+        mReceiveChart.invalidate();
     }
 }
