@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.forbitbd.storeapp.models.Project;
+import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.storeapp.ui.store.StoreActivity;
 import com.forbitbd.storeapp.utils.Constant;
 

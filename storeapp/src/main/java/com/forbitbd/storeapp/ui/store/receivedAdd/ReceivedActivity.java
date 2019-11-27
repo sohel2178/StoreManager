@@ -17,10 +17,10 @@ import android.widget.Toast;
 
 import com.forbitbd.androidutils.dialog.DatePickerListener;
 import com.forbitbd.androidutils.dialog.MyDatePickerFragment;
+import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.models.Project;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.utils.Constant;
