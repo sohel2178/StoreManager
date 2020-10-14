@@ -1,7 +1,10 @@
 package com.forbitbd.storeapp.ui.store.consumedAdd;
 
+import com.forbitbd.androidutils.models.Task;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
+
+import java.util.List;
 
 public interface ConsumedContract {
 
@@ -13,6 +16,7 @@ public interface ConsumedContract {
         void openCamera();
         void saveConsume(Consume consume,byte[] bytes);
         void updateConsume(Consume consume,byte[] bytes);
+        void getAllTask(String projectId);
     }
 
     interface View{
@@ -26,5 +30,6 @@ public interface ConsumedContract {
         void showToast(String message);
         void showError(String message,int fieldId);
         void complete(Consume consume);
+        void updateTaskAdapter(List<Task> taskList);
     }
 }

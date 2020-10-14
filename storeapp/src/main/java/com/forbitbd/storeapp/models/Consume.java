@@ -1,5 +1,7 @@
 package com.forbitbd.storeapp.models;
 
+import com.forbitbd.androidutils.models.Task;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,7 +13,7 @@ public class Consume implements Serializable {
     private String project;
     private String image;
     private String issue_to;
-    private String where_used;
+    private Task where_used;
     private double quantity;
     private Date date;
     private Date created_at;
@@ -67,11 +69,11 @@ public class Consume implements Serializable {
         this.issue_to = issue_to;
     }
 
-    public String getWhere_used() {
+    public Task getWhere_used() {
         return where_used;
     }
 
-    public void setWhere_used(String where_used) {
+    public void setWhere_used(Task where_used) {
         this.where_used = where_used;
     }
 

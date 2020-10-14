@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,14 +44,13 @@ public class ReceivedActivity extends PrebaseActivity
     private Receive receive;
     private List<Supplier> supplierList;
 
-    private AppCompatSpinner spSupplier;
 
-    private TextInputLayout tiDate,tiInvoiceNo,tiName,tiUnit,tiAmount;
+    private TextInputLayout tiDate,tiInvoiceNo,tiName,tiUnit,tiAmount,tiSupplier;
     private EditText etDate,etInvoiceNo,etAmount;
     private MaterialButton btnBrowse,btnSave;
     private ImageView ivImage;
 
-    private AppCompatAutoCompleteTextView etUnit,etName;
+    private AppCompatAutoCompleteTextView etUnit,etName,etSupplier;
 
 
     private Date date;
@@ -58,6 +58,8 @@ public class ReceivedActivity extends PrebaseActivity
     private byte[] bytes;
 
     private List<String> units,names;
+    private int selectedPosition=-1;
+    private ArrayAdapter<Supplier> supplierArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +80,20 @@ public class ReceivedActivity extends PrebaseActivity
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle("Material Received Form");
 
-        spSupplier = findViewById(R.id.sp_supplier);
+        tiSupplier = findViewById(R.id.ti_supplier);
+        etSupplier = findViewById(R.id.et_supplier);
 
-        ArrayAdapter<Supplier> supplierArrayAdapter =
+        etSupplier.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedPosition=i;
+            }
+        });
+
+        supplierArrayAdapter =
                 new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,supplierList);
 
-        spSupplier.setAdapter(supplierArrayAdapter);
+        etSupplier.setAdapter(supplierArrayAdapter);
 
         tiDate = findViewById(R.id.ti_date);
         tiInvoiceNo = findViewById(R.id.ti_invoice_no);
@@ -127,7 +137,8 @@ public class ReceivedActivity extends PrebaseActivity
 
     @Override
     public void bind() {
-        spSupplier.setSelection(getPosition(receive.getReceived_from()));
+        etSupplier.setText(receive.getReceived_from().getName());
+        //etSupplier.setS(0);
         etDate.setText(MyUtil.getStringDate(receive.getDate()));
         etInvoiceNo.setText(receive.getInvoice_no());
         etName.setText(receive.getName());
@@ -163,7 +174,13 @@ public class ReceivedActivity extends PrebaseActivity
 
         receive.setProject(project.get_id());
         receive.setDate(date);
-        receive.setReceived_from((Supplier) spSupplier.getSelectedItem());
+        Supplier supplier=null;
+
+        if(selectedPosition!=-1){
+            supplier = supplierArrayAdapter.getItem(selectedPosition);
+            receive.setReceived_from(supplier);
+        }
+
         receive.setInvoice_no(invoice);
         receive.setName(name);
         receive.setUnit(unit);
@@ -180,10 +197,10 @@ public class ReceivedActivity extends PrebaseActivity
             return;
         }
 
-        if(ivImage.getDrawable()==null){
+        /*if(ivImage.getDrawable()==null){
             Toast.makeText(this, "Browse to Select/Take an Invoice Image", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         if(!isOnline()){
             Toast.makeText(this, "Turn on Your Internet Connection to Perform this Operations", Toast.LENGTH_SHORT).show();
@@ -226,6 +243,7 @@ public class ReceivedActivity extends PrebaseActivity
         tiName.setErrorEnabled(false);
         tiUnit.setErrorEnabled(false);
         tiAmount.setErrorEnabled(false);
+        tiSupplier.setErrorEnabled(false);
 
     }
 
@@ -251,12 +269,16 @@ public class ReceivedActivity extends PrebaseActivity
                 tiAmount.setError(message);
                 etAmount.requestFocus();
                 break;
+
+            case 5:
+                tiSupplier.setError(message);
+                etSupplier.requestFocus();
+                break;
         }
     }
 
     @Override
     public void complete(Receive receive) {
-        Log.d("KKKKKKK","Bal Sal Call");
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.RECEIVED,receive);
@@ -280,6 +302,7 @@ public class ReceivedActivity extends PrebaseActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {

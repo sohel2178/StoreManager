@@ -11,10 +11,10 @@ import com.squareup.picasso.Picasso;
 
 public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implements View.OnClickListener {
 
-    ImageView ivImage;
+    //ImageView ivImage;
     TextView tvName,tvContact,tvEmail;
 
-    ImageView ivEdit,ivDelete;
+    ImageView ivEdit,ivDelete,ivAttach;
 
 
 
@@ -25,12 +25,12 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
         tvContact = itemView.findViewById(R.id.contact);
         tvEmail = itemView.findViewById(R.id.email);
 
-        ivImage = itemView.findViewById(R.id.image);
+        ivAttach = itemView.findViewById(R.id.attach);
         ivEdit = itemView.findViewById(R.id.edit);
         ivDelete = itemView.findViewById(R.id.delete);
 
         ivEdit.setOnClickListener(this);
-        ivImage.setOnClickListener(this);
+        ivAttach.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
 
         itemView.setOnClickListener(this);
@@ -43,10 +43,6 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
         tvContact.setText(supplier.getContact());
         tvEmail.setText(supplier.getEmail());
 
-        Picasso.with(itemView.getContext())
-                .load(supplier.getImage())
-                .into(ivImage);
-
     }
 
     @Override
@@ -55,7 +51,7 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
             getListener().onItemClick(getAdapterPosition());
         }else if(v==ivEdit){
             getListener().onItemUpdate(getAdapterPosition());
-        }else if(v==ivImage){
+        }else if(v==ivAttach){
             getListener().onImageClick(getAdapterPosition());
         }else if(v==ivDelete){
             getListener().onItemRemove(getAdapterPosition());

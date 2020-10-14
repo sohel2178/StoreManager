@@ -57,7 +57,7 @@ public class ConsumeAdapter extends BaseAdapter<Consume,ConsumeListener,ConsumeH
                     for (Consume x: originalList){
                         if(x.getName().toLowerCase().contains(charString.toLowerCase())
                          || x.getIssue_to().toLowerCase().contains(charString.toLowerCase())
-                         || x.getWhere_used().toLowerCase().contains(charString.toLowerCase())){
+                         || x.getWhere_used().getName().toLowerCase().contains(charString.toLowerCase())){
                             tmpList.add(x);
                         }
                     }

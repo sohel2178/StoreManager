@@ -1,11 +1,13 @@
 package com.forbitbd.storeapp.ui.store;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -35,6 +37,10 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class StoreActivity extends PrebaseActivity implements StoreContract.View, View.OnClickListener {
 
     private StorePresenter mPresenter;
@@ -45,6 +51,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private static final int RECEIVED_UPDATE=11000;
     private static final int CONSUMED=12000;
     private static final int CONSUMED_UPDATE=13000;
+    private static final int READ_WRITE_PERMISSION=12000;
 
     private Project project;
     private TabLayout tabLayout;
@@ -55,7 +62,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private SupplierFragment supplierFragment;
     private ConsumedFragment consumedFragment;
     private ReceivedFragment receivedFragment;
-    private FloatingActionButton fabCreateSupplier,fabReceived,fabConsumed,fabReport;
+    private FloatingActionButton fabCreateSupplier,fabReceived,fabConsumed,fabReport,fabDownload;
 
 
     @Override
@@ -88,11 +95,13 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         fabReceived = findViewById(R.id.fab_received);
         fabConsumed = findViewById(R.id.fab_consumed);
         fabReport = findViewById(R.id.fab_report);
+        fabDownload = findViewById(R.id.fab_download);
 
         fabCreateSupplier.setOnClickListener(this);
         fabReceived.setOnClickListener(this);
         fabConsumed.setOnClickListener(this);
         fabReport.setOnClickListener(this);
+        fabDownload.setOnClickListener(this);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -254,6 +263,11 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
 
     }
 
+    @Override
+    public String saveFile(ResponseBody responseBody) {
+        return saveTaskFile("Construction Manager",project.getName(),"Store","store.xlsx",responseBody);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -265,11 +279,14 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
             mPresenter.startConsumedActivity();
         }else if(v==fabReport){
             mPresenter.startReportActivity();
+        }else if(v==fabDownload){
+            requestFileAfterPermission();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
 
         if(requestCode==ADD_SUPPLIER && resultCode==RESULT_OK){
             Supplier supplier = (Supplier) data.getSerializableExtra(Constant.SUPPLIER);
@@ -335,5 +352,27 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
 
 
         return true;
+    }
+
+    @AfterPermissionGranted(READ_WRITE_PERMISSION)
+    private void requestFileAfterPermission() {
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(getApplicationContext(), perms)) {
+            //sendDownloadRequest();
+            Log.d("UUUUUUUU","Called");
+            mPresenter.downloadFile(project);
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, "App need to Permission for Read and Write",
+                    READ_WRITE_PERMISSION, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(
+                requestCode, permissions, grantResults, this);
     }
 }

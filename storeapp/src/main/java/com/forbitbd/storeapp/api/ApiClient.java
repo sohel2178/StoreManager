@@ -1,5 +1,6 @@
 package com.forbitbd.storeapp.api;
 
+import com.forbitbd.androidutils.models.Task;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.StoreResponse;
@@ -27,19 +28,23 @@ public interface ApiClient {
     @GET
     Call<ResponseBody> getImage(@Url String url);
 
+
+    @GET("/civil/api/projects/{project_id}/tasks")
+    Call<List<Task>> getProjectTasks(@Path("project_id") String project_id);
+
     //Suppliers
 
-    @GET("/api/projects/{project_id}/suppliers")
+    @GET("/civil/api/projects/{project_id}/suppliers")
     Call<List<Supplier>> getProjectSuppliers(@Path("project_id") String projectId);
 
-    @POST("/api/projects/{project_id}/suppliers")
+    @POST("/civil/api/projects/{project_id}/suppliers")
     @Multipart
     Call<Supplier> addSupplier(@Path("project_id") String projectId,
                                @Part MultipartBody.Part file,
                                @PartMap() Map<String, RequestBody> partMap);
 
 
-    @PUT("/api/projects/{project_id}/suppliers/{supplier_id}")
+    @PUT("/civil/api/projects/{project_id}/suppliers/{supplier_id}")
     @Multipart
     Call<Supplier> updateSupplier(@Path("project_id") String projectId,
                                   @Path("supplier_id") String supplier_id,
@@ -47,60 +52,63 @@ public interface ApiClient {
                                   @PartMap() Map<String, RequestBody> partMap);
 
 
-    @DELETE("/api/projects/{project_id}/suppliers/{supplier_id}")
+    @DELETE("/civil/api/projects/{project_id}/suppliers/{supplier_id}")
     Call<Void> deleteSupplier(@Path("project_id") String projectId,
                              @Path("supplier_id") String supplier_id);
 
 
-    @GET("/api/projects/{project_id}/suppliers/{supplier_id}/receives")
+    @GET("/civil/api/projects/{project_id}/suppliers/{supplier_id}/receives")
     Call<List<Receive>> getSupplierReceive(@Path("project_id") String project_id,@Path("supplier_id") String supplier_id);
 
 
 
 
-    @GET("/api/projects/{project_id}/receives")
+    @GET("/civil/api/projects/{project_id}/receives")
     Call<List<Receive>> getProjectReceives(@Path("project_id") String projectId);
 
 
-    @POST("/api/projects/{project_id}/receives")
+    @POST("/civil/api/projects/{project_id}/receives")
     @Multipart
     Call<Receive> addReceive(@Path("project_id") String projectId,
                               @Part MultipartBody.Part file,
                               @PartMap() Map<String, RequestBody> partMap);
 
-    @PUT("/api/projects/{project_id}/receives/{receive_id}")
+    @PUT("/civil/api/projects/{project_id}/receives/{receive_id}")
     @Multipart
     Call<Receive> updateReceive(@Path("project_id") String projectId,
                                   @Path("receive_id") String receive_id,
                                   @Part MultipartBody.Part file,
                                   @PartMap() Map<String, RequestBody> partMap);
 
-    @DELETE("/api/projects/{project_id}/receives/{receive_id}")
+    @DELETE("/civil/api/projects/{project_id}/receives/{receive_id}")
     Call<Void> deleteReceive(@Path("project_id") String projectId,
                              @Path("receive_id") String receive_id);
 
 
 
-    @GET("/api/projects/{project_id}/consumes")
+    @GET("/civil/api/projects/{project_id}/consumes")
     Call<List<Consume>> getProjectConsumes(@Path("project_id") String projectId);
 
-    @POST("/api/projects/{project_id}/consumes")
+    @POST("/civil/api/projects/{project_id}/consumes")
     @Multipart
     Call<Consume> addConsume(@Path("project_id") String projectId,
                              @Part MultipartBody.Part file,
                              @PartMap() Map<String, RequestBody> partMap);
 
-    @PUT("/api/projects/{project_id}/consumes/{consume_id}")
+    @PUT("/civil/api/projects/{project_id}/consumes/{consume_id}")
     @Multipart
     Call<Consume> updateConsume(@Path("project_id") String projectId,
                                 @Path("consume_id") String consume_id,
                                 @Part MultipartBody.Part file,
                                 @PartMap() Map<String, RequestBody> partMap);
 
-    @DELETE("/api/projects/{project_id}/consumes/{consume_id}")
+    @DELETE("/civil/api/projects/{project_id}/consumes/{consume_id}")
     Call<Void> deleteConsume(@Path("project_id") String projectId,
                              @Path("consume_id") String consume_id);
 
-    @GET("/api/projects/{project_id}/stores")
+    @GET("/civil/api/projects/{project_id}/stores")
     Call<StoreResponse> getStoreData(@Path("project_id") String projectID);
+
+    @GET("/civil/api/projects/{project_id}/stores/download")
+    Call<ResponseBody> downloadFile(@Path("project_id") String projectID);
 }

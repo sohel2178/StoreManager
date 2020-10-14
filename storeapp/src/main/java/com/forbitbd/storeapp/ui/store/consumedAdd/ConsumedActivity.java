@@ -1,7 +1,7 @@
 package com.forbitbd.storeapp.ui.store.consumedAdd;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,8 +9,11 @@ import android.graphics.ImageDecoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import com.forbitbd.androidutils.dialog.DatePickerListener;
 import com.forbitbd.androidutils.dialog.MyDatePickerFragment;
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.Task;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.storeapp.R;
@@ -30,6 +34,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,18 +45,22 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
     private Project project;
     private Consume consume;
 
-    private TextInputLayout tiDate,tiIssueTo,tiWhereUsed,tiName,tiUnit,tiAmount;
-    private EditText etDate,etIssueTo,etWhereUsed,etAmount;
+    private TextInputLayout tiDate,tiIssueTo,tiName,tiUnit,tiAmount,tiWhereUsed;
+    private EditText etDate,etIssueTo,etAmount;
     private MaterialButton btnBrowse,btnSave;
     private ImageView ivImage;
 
-    private AppCompatAutoCompleteTextView etUnit,etName;
+    private AutoCompleteTextView etUnit,etName,etWhereUsed;
+
 
     private Date date;
 
     private byte[] bytes;
 
     private List<String> units,names;
+    private ArrayAdapter<Task> taskAdapter;
+    private int selectedPosition=-1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +74,6 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
         mPresenter = new ConsumedPresenter(this);
 
-
-
         initView();
     }
 
@@ -76,15 +83,27 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
         tiDate = findViewById(R.id.ti_date);
         tiIssueTo = findViewById(R.id.ti_issue_to);
-        tiWhereUsed = findViewById(R.id.ti_where_used);
         tiName = findViewById(R.id.ti_name);
         tiUnit = findViewById(R.id.ti_unit);
         tiAmount = findViewById(R.id.ti_amount);
+        tiWhereUsed = findViewById(R.id.ti_where_used);
 
 
         etDate = findViewById(R.id.date);
         etIssueTo = findViewById(R.id.issue_to);
+        taskAdapter = new ArrayAdapter<Task>(this,android.R.layout.simple_list_item_1);
+
         etWhereUsed = findViewById(R.id.where_used);
+        etWhereUsed.setAdapter(taskAdapter);
+        etWhereUsed.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedPosition=i;
+                Log.d("HHHHHHHH",selectedPosition+"");
+            }
+        });
+
+        //etWhereUsed.setThreshold(1);
 
         etName = findViewById(R.id.name);
         etName.setThreshold(1);
@@ -114,6 +133,10 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
         btnBrowse.setOnClickListener(this);
         btnSave.setOnClickListener(this);
 
+        mPresenter.getAllTask(project.get_id());
+
+
+
 
     }
 
@@ -121,7 +144,7 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
     public void bind() {
         etDate.setText(MyUtil.getStringDate(consume.getDate()));
         etIssueTo.setText(consume.getIssue_to());
-        etWhereUsed.setText(consume.getWhere_used());
+        etWhereUsed.setText(consume.getWhere_used().getName());
         etName.setText(consume.getName());
         etUnit.setText(consume.getUnit());
         etAmount.setText(String.valueOf(consume.getQuantity()));
@@ -135,10 +158,19 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
     @Override
     public void checkBeforeSave() {
         String issueTo = etIssueTo.getText().toString().trim();
-        String whereUsed = etWhereUsed.getText().toString().trim();
+        //String whereUsed = etWhereUsed.getText().toString().trim();
         String name = etName.getText().toString().trim();
         String unit = etUnit.getText().toString().trim();
         String amountStr = etAmount.getText().toString().trim();
+
+        Task whereUsed = null;
+
+        if(selectedPosition!=-1){
+            whereUsed = taskAdapter.getItem(selectedPosition);
+            Log.d("HHHHHHHH",whereUsed+"");
+            consume.setWhere_used(whereUsed);
+        }
+
 
 
         if(consume==null){
@@ -148,7 +180,7 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
         consume.setProject(project.get_id());
         consume.setDate(date);
         consume.setIssue_to(issueTo);
-        consume.setWhere_used(whereUsed);
+
         consume.setName(name);
         consume.setUnit(unit);
 
@@ -165,10 +197,10 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
             return;
         }
 
-        if(ivImage.getDrawable()==null){
+       /* if(ivImage.getDrawable()==null){
             Toast.makeText(this, "Browse to Select/Take an Invoice Image", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         if(!isOnline()){
             Toast.makeText(this, "Turn on Your Internet Connection to Perform this Operations", Toast.LENGTH_SHORT).show();
@@ -209,10 +241,10 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
     public void clearPreError() {
         tiDate.setErrorEnabled(false);
         tiIssueTo.setErrorEnabled(false);
-        tiWhereUsed.setErrorEnabled(false);
         tiName.setErrorEnabled(false);
         tiUnit.setErrorEnabled(false);
         tiAmount.setErrorEnabled(false);
+        tiWhereUsed.setErrorEnabled(false);
     }
 
     @Override
@@ -249,6 +281,7 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
     @Override
     public void complete(Consume consume) {
+        Log.d("FATHER","Success");
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.CONSUME,consume);
@@ -257,6 +290,14 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
         setResult(RESULT_OK,intent);
         finish();
 
+    }
+
+    @Override
+    public void updateTaskAdapter(List<Task> taskList) {
+        taskAdapter.addAll(taskList);
+        taskAdapter.notifyDataSetChanged();
+
+        Log.d("YYYYY",taskAdapter.getCount()+"");
     }
 
     @Override
@@ -274,6 +315,7 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {

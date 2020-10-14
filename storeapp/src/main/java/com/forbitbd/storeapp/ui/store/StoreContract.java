@@ -1,8 +1,11 @@
 package com.forbitbd.storeapp.ui.store;
 
+import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
+
+import okhttp3.ResponseBody;
 
 public interface StoreContract {
 
@@ -12,6 +15,7 @@ public interface StoreContract {
         void startConsumedActivity();
         void startReportActivity();
         void filter(String query);
+        void downloadFile(Project project);
     }
 
     interface View{
@@ -24,5 +28,9 @@ public interface StoreContract {
         void startUpdateConsumeActivity(Consume consume);
         void removeSupplierReceive(Supplier supplier);
         void filter(String query);
+        void showProgressDialog();
+        void hideProgressDialog();
+        String saveFile(ResponseBody responseBody);
+        void openFile(String path);
     }
 }

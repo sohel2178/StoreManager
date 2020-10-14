@@ -60,4 +60,5 @@
     <string name="consume_detail">Consumed Detail</string>
     <string name="received_entry">Received Entry</string>
     <string name="consumption_entry">Consumption Entry</string>
+    <string name="supplier_photo">Supplier Photo</string>
 </resources>

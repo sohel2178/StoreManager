@@ -54,7 +54,16 @@ public class ConsumedFragment extends StoreBaseFragment implements ConsumedContr
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        mPresenter.getProjectConsumes(getProject().get_id());
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(adapter.getItemCount()<=0){
+            mPresenter.getProjectConsumes(getProject().get_id());
+        }
     }
 
     @Override

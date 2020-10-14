@@ -1,11 +1,15 @@
 package com.forbitbd.storeapp.ui.store.consumedAdd;
 
+import android.util.Log;
+
 import com.forbitbd.androidutils.api.ServiceGenerator;
+import com.forbitbd.androidutils.models.Task;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.storeapp.api.ApiClient;
 import com.forbitbd.storeapp.models.Consume;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -61,7 +65,7 @@ public class ConsumedPresenter implements ConsumedContract.Presenter {
             return false;
         }
 
-        if(consume.getWhere_used().equals("")){
+        if(consume.getWhere_used()==null){
             mView.showError("Where used the Material Should not Empty",4);
             return false;
         }
@@ -93,7 +97,7 @@ public class ConsumedPresenter implements ConsumedContract.Presenter {
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), consume.getName());
         RequestBody unit = RequestBody.create(MediaType.parse("text/plain"), consume.getUnit());
         RequestBody issue_to = RequestBody.create(MediaType.parse("text/plain"), consume.getIssue_to());
-        RequestBody where_used = RequestBody.create(MediaType.parse("text/plain"), consume.getWhere_used());
+        RequestBody where_used = RequestBody.create(MediaType.parse("text/plain"), consume.getWhere_used().get_id());
         RequestBody quantity = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(consume.getQuantity()));
         RequestBody date = RequestBody.create(MediaType.parse("text/plain"), MyUtil.getStringDate(consume.getDate()));
 
@@ -115,11 +119,15 @@ public class ConsumedPresenter implements ConsumedContract.Presenter {
 
                         if(response.isSuccessful()){
                             mView.complete(response.body());
+                            Log.d("FATHER","Success");
+                        }else{
+                            Log.d("FATHER","Failed "+response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Consume> call, Throwable t) {
+                        Log.d("FATHER","Failed "+t.getMessage());
                         mView.hideProgressDialog();
                     }
                 });
@@ -143,7 +151,7 @@ public class ConsumedPresenter implements ConsumedContract.Presenter {
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), consume.getName());
         RequestBody unit = RequestBody.create(MediaType.parse("text/plain"), consume.getUnit());
         RequestBody issue_to = RequestBody.create(MediaType.parse("text/plain"), consume.getIssue_to());
-        RequestBody where_used = RequestBody.create(MediaType.parse("text/plain"), consume.getWhere_used());
+        RequestBody where_used = RequestBody.create(MediaType.parse("text/plain"), consume.getWhere_used().get_id());
         RequestBody quantity = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(consume.getQuantity()));
         RequestBody date = RequestBody.create(MediaType.parse("text/plain"), MyUtil.getStringDate(consume.getDate()));
 
@@ -174,5 +182,24 @@ public class ConsumedPresenter implements ConsumedContract.Presenter {
                     }
                 });
 
+    }
+
+    @Override
+    public void getAllTask(String projectId) {
+        ApiClient client = ServiceGenerator.createService(ApiClient.class);
+        client.getProjectTasks(projectId)
+                .enqueue(new Callback<List<Task>>() {
+                    @Override
+                    public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                        if(response.isSuccessful()){
+                            mView.updateTaskAdapter(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Task>> call, Throwable t) {
+                        Log.d("HHHHH","Fail");
+                    }
+                });
     }
 }

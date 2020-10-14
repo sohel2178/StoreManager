@@ -77,7 +77,7 @@ public class ConsumeDetail extends DialogFragment {
         if(consume!=null){
             tvDate.setText(MyUtil.getStringDate(consume.getDate()));
             tvIssueTo.setText(consume.getIssue_to());
-            tvWhereUsed.setText(consume.getWhere_used());
+            tvWhereUsed.setText(consume.getWhere_used().getName());
             tvName.setText(consume.getName());
             tvQuantity.setText(String.valueOf(consume.getQuantity()).concat("  ").concat(consume.getUnit()));
         }

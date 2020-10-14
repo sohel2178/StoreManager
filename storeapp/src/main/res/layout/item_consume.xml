@@ -7,21 +7,22 @@
     android:layout_height="@dimen/block_height"
     android:layout_marginBottom="@dimen/small_padding">
 
-  <ImageView
-      android:layout_width="@dimen/block_height"
-      android:layout_height="@dimen/block_height"
-      android:scaleType="centerCrop"
-      android:id="@+id/image"/>
 
   <RelativeLayout
-      android:layout_marginStart="@dimen/very_small_padding"
-      android:layout_width="80dp"
-      android:layout_height="@dimen/block_height">
+      android:layout_width="wrap_content"
+      android:layout_height="@dimen/block_height"
+      android:padding="@dimen/small_padding">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
+
+      <ImageView
+          android:id="@+id/attach"
+          app:srcCompat="@drawable/attach"
+          style="@style/ProjectIcon"
+          android:layout_marginEnd="@dimen/default_margin"/>
 
       <ImageView
           android:id="@+id/edit"

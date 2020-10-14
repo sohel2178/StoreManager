@@ -15,7 +15,6 @@
         <activity android:name=".ui.store.receivedAdd.ReceivedActivity" />
         <activity android:name=".ui.store.StoreActivity" />
         <activity android:name=".ui.store.addSupplier.AddSupplierActivity" />
-        <activity android:name=".ui.zoomImage.ZoomImageActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

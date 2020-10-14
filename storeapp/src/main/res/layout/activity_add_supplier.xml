@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/colorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/colorPrimary"/>
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,73 +26,74 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/medium_padding"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/medium_padding">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ti_name">
+                    android:hint="@string/name">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/name"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="text"/>
-
+                        android:inputType="text" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_contact"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ti_contact">
+                    android:hint="@string/contact">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/contact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/contact"
-                        android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="phone"/>
 
+                        android:fontFamily="@font/arima_madurai_medium"
+                        android:inputType="phone" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ti_email">
+                    android:hint="@string/email">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/email"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="textEmailAddress"/>
-
+                        android:inputType="textEmailAddress" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_material_supply"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ti_material_supply">
+                    android:hint="@string/supplied_material">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/material_supply"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/supplied_material"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="text"/>
-
+                        android:inputType="text" />
 
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -101,41 +102,41 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select Supplier Photo"
                     android:fontFamily="@font/arima_madurai_medium"
+                    android:gravity="center_horizontal"
                     android:padding="@dimen/small_padding"
-                    android:textSize="@dimen/large_text_size"
-                    android:gravity="center_horizontal"/>
+                    android:text="Select Supplier Photo"
+                    android:textSize="@dimen/large_text_size" />
 
                 <ImageView
+                    android:id="@+id/image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:id="@+id/image"
+                    android:layout_gravity="center_horizontal"
                     android:background="@android:drawable/picture_frame"
-                    android:layout_gravity="center_horizontal" />
+                    android:contentDescription="@string/supplier_photo" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/browse"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:text="@string/browse"
-                    android:id="@+id/browse"/>
+                    android:text="@string/browse" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:text="@string/save"
-                    android:id="@+id/save"/>
+                    android:text="@string/save" />
 
 
             </LinearLayout>
 
 
         </androidx.cardview.widget.CardView>
-
 
 
     </ScrollView>

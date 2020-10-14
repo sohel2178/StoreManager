@@ -3,6 +3,7 @@ package com.forbitbd.storeapp.ui.store.supplier;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,17 @@ public class SupplierFragment extends StoreBaseFragment
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        mPresenter.getProjectSuppliers(getProject().get_id());
+
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(adapter.getItemCount()<=0){
+            mPresenter.getProjectSuppliers(getProject().get_id());
+        }
     }
 
     public void addSupplierToAdapter(Supplier supplier){
@@ -130,6 +141,7 @@ public class SupplierFragment extends StoreBaseFragment
     @Override
     public void onImageClick(int position) {
         get_activity().startZoomImageActivity(adapter.getItem(position).getImage());
+        Log.d("HHHHHH",adapter.getItem(position).getImage());
     }
 
     public void filter(String query){

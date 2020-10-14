@@ -65,9 +65,17 @@ public class ReceivedFragment extends StoreBaseFragment implements ReceivedContr
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        mPresenter.getProjectReceives(getProject().get_id());
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(adapter.getItemCount()<=0){
+            mPresenter.getProjectReceives(getProject().get_id());
+        }
+    }
 
     @Override
     public List<String> getUnits() {

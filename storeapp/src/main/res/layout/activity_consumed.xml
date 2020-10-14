@@ -21,7 +21,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#dddddd">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,6 +33,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_date">
 
                     <EditText
@@ -50,9 +52,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_name">
 
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    <AutoCompleteTextView
+                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -67,9 +71,11 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_unit">
 
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    <AutoCompleteTextView
+                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
                         android:id="@+id/unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -84,6 +90,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_issue_to">
 
                     <EditText
@@ -99,20 +106,21 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/where_used"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:id="@+id/ti_where_used">
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/where_used"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/where_used"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="text"/>
-
-
+                        android:inputType="none"
+                        />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,6 +128,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/ti_amount">
 
                     <EditText

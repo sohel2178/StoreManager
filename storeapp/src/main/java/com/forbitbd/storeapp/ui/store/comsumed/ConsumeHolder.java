@@ -11,15 +11,14 @@ import com.squareup.picasso.Picasso;
 
 public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implements View.OnClickListener {
 
-    ImageView ivImage;
     TextView tvName,tvSupplier;
 
-    ImageView ivEdit,ivDelete;
+    ImageView ivEdit,ivDelete,ivAttach;
 
     public ConsumeHolder(View itemView, ConsumeListener listener) {
         super(itemView, listener);
 
-        ivImage = itemView.findViewById(R.id.image);
+        ivAttach = itemView.findViewById(R.id.attach);
         ivEdit = itemView.findViewById(R.id.edit);
         ivDelete = itemView.findViewById(R.id.delete);
 
@@ -27,7 +26,7 @@ public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implement
         tvSupplier = itemView.findViewById(R.id.supplier);
 
 
-        ivImage.setOnClickListener(this);
+        ivAttach.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
         itemView.setOnClickListener(this);
@@ -42,17 +41,15 @@ public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implement
                 .concat(" ").concat(consume.getUnit())
         );
 
-        tvSupplier.setText("Used In : ".concat(consume.getWhere_used()));
+        tvSupplier.setText("Used In : ".concat(consume.getWhere_used().getName()));
 
-        Picasso.with(itemView.getContext())
-                .load(consume.getImage())
-                .into(ivImage);
+
 
     }
 
     @Override
     public void onClick(View view) {
-        if(view==ivImage){
+        if(view==ivAttach){
             getListener().onImageClick(getAdapterPosition());
         }else if(view==ivEdit){
             getListener().onItemUpdate(getAdapterPosition());

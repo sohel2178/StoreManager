@@ -11,14 +11,13 @@ import com.squareup.picasso.Picasso;
 
 public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implements View.OnClickListener {
 
-    ImageView ivImage;
     TextView tvName,tvSupplier;
 
-    ImageView ivEdit,ivDelete;
+    ImageView ivEdit,ivDelete,ivAttach;
 
     public ReceiveHolder(View itemView, ReceiveListener listener) {
         super(itemView, listener);
-        ivImage = itemView.findViewById(R.id.image);
+        ivAttach = itemView.findViewById(R.id.attach);
         ivEdit = itemView.findViewById(R.id.edit);
         ivDelete = itemView.findViewById(R.id.delete);
 
@@ -26,7 +25,7 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
         tvSupplier = itemView.findViewById(R.id.supplier);
 
 
-        ivImage.setOnClickListener(this);
+        ivAttach.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
         itemView.setOnClickListener(this);
@@ -44,10 +43,6 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
 
         tvSupplier.setText("Supplier: ".concat(receive.getReceived_from().getName()));
 
-        Picasso.with(itemView.getContext())
-                .load(receive.getImage())
-                .into(ivImage);
-
     }
 
     @Override
@@ -58,7 +53,7 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
             getListener().onItemUpdate(getAdapterPosition());
         }else if(view==ivDelete){
             getListener().onItemRemove(getAdapterPosition());
-        }else if(view==ivImage){
+        }else if(view==ivAttach){
             getListener().onImageClick(getAdapterPosition());
         }
     }
