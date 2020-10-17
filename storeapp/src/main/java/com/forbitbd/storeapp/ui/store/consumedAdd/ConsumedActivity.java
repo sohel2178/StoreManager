@@ -163,6 +163,10 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
         String unit = etUnit.getText().toString().trim();
         String amountStr = etAmount.getText().toString().trim();
 
+        if(consume==null){
+            consume = new Consume();
+        }
+
         Task whereUsed = null;
 
         if(selectedPosition!=-1){
@@ -173,9 +177,7 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
 
 
-        if(consume==null){
-            consume = new Consume();
-        }
+
 
         consume.setProject(project.get_id());
         consume.setDate(date);
