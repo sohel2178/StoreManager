@@ -1,7 +1,6 @@
 package com.forbitbd.storeapp.ui.store.consumedAdd;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.graphics.ImageDecoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,7 +32,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,6 +78,8 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle("Material Consumption Form");
 
+        setupBannerAd(R.id.adView);
+
         tiDate = findViewById(R.id.ti_date);
         tiIssueTo = findViewById(R.id.ti_issue_to);
         tiName = findViewById(R.id.ti_name);
@@ -99,7 +98,6 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedPosition=i;
-                Log.d("HHHHHHHH",selectedPosition+"");
             }
         });
 
@@ -171,7 +169,6 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
         if(selectedPosition!=-1){
             whereUsed = taskAdapter.getItem(selectedPosition);
-            Log.d("HHHHHHHH",whereUsed+"");
             consume.setWhere_used(whereUsed);
         }
 
@@ -283,7 +280,6 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
     @Override
     public void complete(Consume consume) {
-        Log.d("FATHER","Success");
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.CONSUME,consume);
@@ -298,8 +294,6 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
     public void updateTaskAdapter(List<Task> taskList) {
         taskAdapter.addAll(taskList);
         taskAdapter.notifyDataSetChanged();
-
-        Log.d("YYYYY",taskAdapter.getCount()+"");
     }
 
     @Override

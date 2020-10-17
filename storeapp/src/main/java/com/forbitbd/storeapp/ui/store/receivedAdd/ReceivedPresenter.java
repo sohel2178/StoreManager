@@ -1,6 +1,5 @@
 package com.forbitbd.storeapp.ui.store.receivedAdd;
 
-import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.androidutils.utils.MyUtil;
@@ -113,16 +112,13 @@ public class ReceivedPresenter implements ReceivedContract.Presenter {
                     @Override
                     public void onResponse(Call<Receive> call, Response<Receive> response) {
                         mView.hideProgressDialog();
-                        Log.d("HHHHHHH","Success "+response.code());
                         if(response.isSuccessful()){
-                            Log.d("HHHHHHH","Yes");
                             mView.complete(response.body());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Receive> call, Throwable t) {
-                        Log.d("HHHHHHH","NO");
                         mView.hideProgressDialog();
                     }
                 });

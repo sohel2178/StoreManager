@@ -1,207 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorPrimary">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/colorPrimary"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/adView">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_margin">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:background="@color/colorPrimary"/>
 
-        <androidx.cardview.widget.CardView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#dddddd">
+            android:padding="@dimen/default_margin">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/medium_padding"
-                android:orientation="vertical">
+                app:cardBackgroundColor="#dddddd">
 
-              <!--  <LinearLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:padding="@dimen/small_padding">
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/medium_padding"
+                    android:orientation="vertical">
+
+                    <!--  <LinearLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="42dp"
+                          android:padding="@dimen/small_padding">
+                          <TextView
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center_vertical"
+                              android:text="@string/select_supplier"
+                              android:textSize="16sp"/>
+
+                          <androidx.appcompat.widget.AppCompatSpinner
+                              android:id="@+id/sp_supplier"
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center_vertical"
+                              android:background="@drawable/bg_spinner"
+                              android:dropDownWidth="wrap_content"/>
+                      </LinearLayout>-->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/select_supplier"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:id="@+id/ti_supplier">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/et_supplier"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/arima_madurai_medium"
+                            android:inputType="none"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/ti_date">
+
+                        <EditText
+                            android:id="@+id/date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/material_received_date"
+                            android:focusable="false"
+                            android:fontFamily="@font/arima_madurai_medium"
+                            android:inputType="date"/>
+
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/ti_invoice_no">
+
+                        <EditText
+                            android:id="@+id/invoice_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/invoice_no"
+                            android:fontFamily="@font/arima_madurai_medium"
+                            android:inputType="text"/>
+
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/ti_name">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/received_material_name"
+                            android:fontFamily="@font/arima_madurai_medium"
+                            android:inputType="text"/>
+
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/ti_unit">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
+                            android:id="@+id/unit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/unit"
+                            android:fontFamily="@font/arima_madurai_medium"
+                            android:inputType="text"/>
+
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/ti_amount">
+
+                        <EditText
+                            android:id="@+id/amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/quantity"
+                            android:fontFamily="@font/arima_madurai_medium"
+                            android:inputType="numberDecimal"/>
+
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/select_supplier"
-                        android:textSize="16sp"/>
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/sp_supplier"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/bg_spinner"
-                        android:dropDownWidth="wrap_content"/>
-                </LinearLayout>-->
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/select_supplier"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:id="@+id/ti_supplier">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/et_supplier"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="Take Invoice Photo"
                         android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="none"
-                        />
+                        android:padding="@dimen/small_padding"
+                        android:textSize="@dimen/large_text_size"
+                        android:gravity="center_horizontal"/>
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="188dp"
+                        android:id="@+id/image"
+                        android:background="@android:drawable/picture_frame"
+                        android:layout_gravity="center_horizontal" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:id="@+id/ti_date">
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:text="@string/browse"
+                        android:id="@+id/browse"/>
 
-                    <EditText
-                        android:id="@+id/date"
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/material_received_date"
-                        android:focusable="false"
-                        android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="date"/>
+                        android:layout_gravity="center_horizontal"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:text="@string/save"
+                        android:id="@+id/save"/>
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
 
 
 
-                </com.google.android.material.textfield.TextInputLayout>
+        </ScrollView>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:id="@+id/ti_invoice_no">
+    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/invoice_no"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/invoice_no"
-                        android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="text"/>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit"/>
 
+</RelativeLayout>
 
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:id="@+id/ti_name">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
-                        android:id="@+id/name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/received_material_name"
-                        android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="text"/>
-
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:id="@+id/ti_unit">
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        style="@style/Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox"
-                        android:id="@+id/unit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/unit"
-                        android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="text"/>
-
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:id="@+id/ti_amount">
-
-                    <EditText
-                        android:id="@+id/amount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/quantity"
-                        android:fontFamily="@font/arima_madurai_medium"
-                        android:inputType="numberDecimal"/>
-
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Take Invoice Photo"
-                    android:fontFamily="@font/arima_madurai_medium"
-                    android:padding="@dimen/small_padding"
-                    android:textSize="@dimen/large_text_size"
-                    android:gravity="center_horizontal"/>
-
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="188dp"
-                    android:id="@+id/image"
-                    android:background="@android:drawable/picture_frame"
-                    android:layout_gravity="center_horizontal" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:text="@string/browse"
-                    android:id="@+id/browse"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:text="@string/save"
-                    android:id="@+id/save"/>
-
-
-            </LinearLayout>
-
-
-        </androidx.cardview.widget.CardView>
-
-
-
-    </ScrollView>
-
-</LinearLayout>

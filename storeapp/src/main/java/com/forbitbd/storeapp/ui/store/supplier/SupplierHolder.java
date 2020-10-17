@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 import com.forbitbd.storeapp.models.Supplier;
-import com.squareup.picasso.Picasso;
 
 public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implements View.OnClickListener {
 

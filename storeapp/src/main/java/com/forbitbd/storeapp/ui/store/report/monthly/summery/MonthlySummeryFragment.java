@@ -8,25 +8,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseListener;
-import com.forbitbd.storeapp.models.Consume;
-import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.ReportSummery;
 import com.forbitbd.storeapp.ui.store.report.daily.DailyAdapter;
 import com.forbitbd.storeapp.ui.store.report.daily.DailyContract;
 import com.forbitbd.storeapp.ui.store.report.daily.DailyPresenter;
 import com.forbitbd.storeapp.ui.store.report.monthly.MonthlyFragment;
-import com.forbitbd.storeapp.ui.store.report.summery.SummeryAdapter;
-import com.forbitbd.storeapp.ui.store.report.summery.SummeryContract;
-import com.forbitbd.storeapp.ui.store.report.summery.SummeryPresenter;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

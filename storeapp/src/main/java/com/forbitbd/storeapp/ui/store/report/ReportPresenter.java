@@ -1,6 +1,5 @@
 package com.forbitbd.storeapp.ui.store.report;
 
-import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.storeapp.api.ApiClient;
@@ -31,14 +30,12 @@ public class ReportPresenter implements ReportContract.Presenter {
                         mView.hideProgressDialog();
 
                         if(response.isSuccessful()){
-                            Log.d("HHHHHHH","Success");
                             mView.initializeData(response.body());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<StoreResponse> call, Throwable t) {
-                        Log.d("HHHHHHH",t.getMessage()+"");
                         mView.hideProgressDialog();
                     }
                 });

@@ -3,7 +3,6 @@ package com.forbitbd.storeapp.ui.store.supplier;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,7 +140,6 @@ public class SupplierFragment extends StoreBaseFragment
     @Override
     public void onImageClick(int position) {
         get_activity().startZoomImageActivity(adapter.getItem(position).getImage());
-        Log.d("HHHHHH",adapter.getItem(position).getImage());
     }
 
     public void filter(String query){

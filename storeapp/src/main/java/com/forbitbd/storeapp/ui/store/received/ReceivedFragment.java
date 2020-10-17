@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,7 +124,6 @@ public class ReceivedFragment extends StoreBaseFragment implements ReceivedContr
 
     @Override
     public void onItemClick(int position) {
-        Log.d("YYYYYYY","Clicked "+position);
         ReceivedDetail receivedDetail = new ReceivedDetail();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.RECEIVED,adapter.getItem(position));

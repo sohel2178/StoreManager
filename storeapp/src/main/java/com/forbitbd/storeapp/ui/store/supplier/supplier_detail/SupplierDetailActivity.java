@@ -47,6 +47,8 @@ public class SupplierDetailActivity extends PrebaseActivity implements SupplierD
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(supplier.getName().concat(" Details"));
 
+        setupBannerAd(R.id.adView);
+
         tvTransactionCount = findViewById(R.id.transaction_count);
 
         viewPager = findViewById(R.id.viewpager);

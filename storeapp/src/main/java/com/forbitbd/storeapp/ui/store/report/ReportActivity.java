@@ -56,6 +56,8 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(project.getName().concat(" Store Report"));
 
+        setupBannerAd(R.id.adView);
+
         this.summeryFragment = new SummeryFragment();
         this.dailyFragment = new DailyFragment();
         this.monthlyFragment = new MonthlyFragment();

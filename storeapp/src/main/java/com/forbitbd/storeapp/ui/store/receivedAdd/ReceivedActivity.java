@@ -2,13 +2,11 @@ package com.forbitbd.storeapp.ui.store.receivedAdd;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -79,6 +77,8 @@ public class ReceivedActivity extends PrebaseActivity
     private void initView() {
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle("Material Received Form");
+
+        setupBannerAd(R.id.adView);
 
         tiSupplier = findViewById(R.id.ti_supplier);
         etSupplier = findViewById(R.id.et_supplier);

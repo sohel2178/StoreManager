@@ -120,13 +120,8 @@ public class MonthlyFragment extends ReportBase implements View.OnClickListener,
         pagerAdapter.addFragment(summeryFragment,"Summery");
         pagerAdapter.addFragment(receiveFragment,"Received");
         pagerAdapter.addFragment(consumeFragment,"Consumed");
-       /* pagerAdapter.addFragment(new AccountFragment(), "Accounts");
-        pagerAdapter.addFragment(new TransactionFragment(), "Transactions");*/
 
         viewPager.setAdapter(pagerAdapter);
-
-
-
 
     }
 

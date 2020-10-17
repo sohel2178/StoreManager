@@ -64,6 +64,8 @@ public class AddSupplierActivity extends PrebaseActivity implements AddSupplierC
             getSupportActionBar().setTitle("Create New Supplier");
         }
 
+        setupBannerAd(R.id.adView);
+
         tiName = findViewById(R.id.ti_name);
         tiContact = findViewById(R.id.ti_contact);
         tiEmail = findViewById(R.id.ti_email);

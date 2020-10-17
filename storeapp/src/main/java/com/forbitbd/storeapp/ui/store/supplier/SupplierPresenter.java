@@ -1,7 +1,6 @@
 package com.forbitbd.storeapp.ui.store.supplier;
 
 
-import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.storeapp.api.ApiClient;
@@ -32,14 +31,10 @@ public class SupplierPresenter implements SupplierContract.Presenter {
                     @Override
                     public void onResponse(Call<List<Supplier>> call, Response<List<Supplier>> response) {
                         mView.hideProgressDialog();
-
-                        Log.d("HHHHHH","Success Call");
-
                         if(response.isSuccessful()){
-                            Log.d("HHHHHH","Success Call");
                             mView.renderAdapter(response.body());
                         }else {
-                            Log.d("HHHHHH","Success Call "+response.code());
+
                         }
                     }
 

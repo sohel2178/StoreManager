@@ -1,6 +1,5 @@
 package com.forbitbd.storeapp.ui.store;
 
-import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
 import com.forbitbd.androidutils.models.Project;

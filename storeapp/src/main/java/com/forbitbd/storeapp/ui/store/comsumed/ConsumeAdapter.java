@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseAdapter;
 import com.forbitbd.storeapp.models.Consume;
-import com.forbitbd.storeapp.models.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;

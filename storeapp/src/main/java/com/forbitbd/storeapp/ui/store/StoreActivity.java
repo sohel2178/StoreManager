@@ -81,6 +81,8 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         setupToolbar(R.id.toolbar);
         getSupportActionBar().setTitle(project.getName().concat(" | Store"));
 
+        setupBannerAd(R.id.adView);
+
         supplierFragment = new SupplierFragment();
         consumedFragment = new ConsumedFragment();
         receivedFragment = new ReceivedFragment();

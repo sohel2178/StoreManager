@@ -38,13 +38,6 @@ public class ConsumeDetail extends DialogFragment {
         this.consume = (Consume) getArguments().getSerializable(Constant.CONSUME);
     }
 
-   /* @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_consume_detail, container, false);
-    }*/
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

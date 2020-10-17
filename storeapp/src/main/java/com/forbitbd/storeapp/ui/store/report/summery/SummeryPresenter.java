@@ -1,6 +1,5 @@
 package com.forbitbd.storeapp.ui.store.report.summery;
 
-import android.util.Log;
 
 import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;

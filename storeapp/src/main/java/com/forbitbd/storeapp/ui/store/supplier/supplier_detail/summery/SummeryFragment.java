@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,13 +57,11 @@ public class SummeryFragment extends StoreDetailBase implements SummeryContract.
 
     @Override
     public void addToAdapter(Summery summery) {
-        Log.d("HHHHHHHHHH",summery.getName()+" "+summery.getQuantity());
         adapter.add(summery);
     }
 
     @Override
     public void update(List<Receive> receiveList) {
-        Log.d("HHHHHHHHHH",receiveList.size()+"");
         mPresenter.groupByName(receiveList);
     }
 

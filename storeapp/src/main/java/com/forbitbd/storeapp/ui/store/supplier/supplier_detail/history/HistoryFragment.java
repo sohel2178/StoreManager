@@ -93,18 +93,6 @@ public class HistoryFragment extends StoreDetailBase implements HistoryContract.
 
     @Override
     public void onItemRemove(final int position) {
-        /*final DeleteDialog deleteDialog = new DeleteDialog();
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.CONTENT,"Really want to delete this Item??");
-        deleteDialog.setArguments(bundle);
-        deleteDialog.setListener(new DialogClickListener() {
-            @Override
-            public void positiveButtonClick() {
-                deleteDialog.dismiss();
-                mPresenter.deleteReceive(adapter.getItem(position));
-            }
-        });
 
-        deleteDialog.show(getChildFragmentManager(),"HHH");*/
     }
 }
