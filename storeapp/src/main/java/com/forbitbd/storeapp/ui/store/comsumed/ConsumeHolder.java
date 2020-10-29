@@ -4,9 +4,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
-import com.forbitbd.storeapp.models.Consume;
 
 public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implements View.OnClickListener {
 

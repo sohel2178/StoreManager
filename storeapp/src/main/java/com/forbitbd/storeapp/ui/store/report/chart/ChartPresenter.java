@@ -3,8 +3,8 @@ package com.forbitbd.storeapp.ui.store.report.chart;
 
 
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.utils.MyUtil;
-import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 
 import java.util.ArrayList;

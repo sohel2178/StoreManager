@@ -1,7 +1,7 @@
 package com.forbitbd.storeapp.api;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Task;
-import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.StoreResponse;
 import com.forbitbd.storeapp.models.Supplier;

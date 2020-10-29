@@ -1,7 +1,7 @@
 package com.forbitbd.storeapp.ui.store;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Project;
-import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 

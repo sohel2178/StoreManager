@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 
 import com.forbitbd.androidutils.dialog.delete.DeleteDialog;
 import com.forbitbd.androidutils.dialog.delete.DialogClickListener;
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.ui.store.StoreBaseFragment;
 import com.forbitbd.storeapp.ui.store.comsumed.consumeDetail.ConsumeDetail;
 import com.forbitbd.storeapp.utils.Constant;

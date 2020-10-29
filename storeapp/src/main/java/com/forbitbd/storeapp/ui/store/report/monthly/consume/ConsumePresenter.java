@@ -1,6 +1,6 @@
 package com.forbitbd.storeapp.ui.store.report.monthly.consume;
 
-import com.forbitbd.storeapp.models.Consume;
+import com.forbitbd.androidutils.models.Consume;
 
 import java.util.List;
 

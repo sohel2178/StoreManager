@@ -14,9 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.utils.Constant;
 import com.google.android.material.button.MaterialButton;
 

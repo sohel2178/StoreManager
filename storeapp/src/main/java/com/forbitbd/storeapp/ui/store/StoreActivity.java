@@ -16,11 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
-import com.forbitbd.storeapp.models.Consume;
 import com.forbitbd.storeapp.models.Receive;
 import com.forbitbd.storeapp.models.Supplier;
 import com.forbitbd.storeapp.ui.store.addSupplier.AddSupplierActivity;

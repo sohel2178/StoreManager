@@ -5,10 +5,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseAdapter;
 import com.forbitbd.storeapp.baseAdapter.BaseListener;
-import com.forbitbd.storeapp.models.Consume;
 
 public class ConsumeAdapter extends BaseAdapter<Consume, BaseListener,ConsumeHolder> {
     public ConsumeAdapter(Context context, BaseListener listener) {

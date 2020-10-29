@@ -1,7 +1,6 @@
 package com.forbitbd.storeapp.ui.store.comsumed;
 
-import com.forbitbd.storeapp.models.Consume;
-import com.forbitbd.storeapp.models.Receive;
+import com.forbitbd.androidutils.models.Consume;
 
 import java.util.List;
 

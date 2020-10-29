@@ -7,9 +7,9 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseAdapter;
-import com.forbitbd.storeapp.models.Consume;
 
 import java.util.ArrayList;
 import java.util.List;

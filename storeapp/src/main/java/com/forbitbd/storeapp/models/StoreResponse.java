@@ -1,5 +1,7 @@
 package com.forbitbd.storeapp.models;
 
+import com.forbitbd.androidutils.models.Consume;
+
 import java.util.List;
 
 public class StoreResponse {

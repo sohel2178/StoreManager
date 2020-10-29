@@ -5,11 +5,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 import com.forbitbd.storeapp.baseAdapter.BaseListener;
-import com.forbitbd.storeapp.models.Consume;
 
 public class ConsumeHolder extends BaseHolder<Consume, BaseListener> {
 

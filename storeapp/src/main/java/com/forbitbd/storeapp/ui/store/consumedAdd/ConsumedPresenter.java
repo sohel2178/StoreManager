@@ -3,10 +3,10 @@ package com.forbitbd.storeapp.ui.store.consumedAdd;
 import android.util.Log;
 
 import com.forbitbd.androidutils.api.ServiceGenerator;
+import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Task;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.storeapp.api.ApiClient;
-import com.forbitbd.storeapp.models.Consume;
 
 import java.util.HashMap;
 import java.util.List;
