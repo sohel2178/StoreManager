@@ -7,6 +7,7 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseAdapter;
 import com.forbitbd.storeapp.models.Supplier;
@@ -18,15 +19,17 @@ import java.util.List;
 public class SupplierAdapter extends BaseAdapter<Supplier,SupplierListener,SupplierHolder> implements Filterable {
 
     private List<Supplier> originalList;
+    private SharedProject.Permission storePermission;
 
-    public SupplierAdapter(Context context, SupplierListener listener) {
+    public SupplierAdapter(Context context, SupplierListener listener,SharedProject.Permission storePermission) {
         super(context, listener);
+        this.storePermission = storePermission;
     }
 
     @NonNull
     @Override
     public SupplierHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new SupplierHolder(inflate(R.layout.item_supplier,parent),getListener());
+        return new SupplierHolder(inflate(R.layout.item_supplier,parent),getListener(),storePermission);
     }
 
     public void update(Supplier supplier){

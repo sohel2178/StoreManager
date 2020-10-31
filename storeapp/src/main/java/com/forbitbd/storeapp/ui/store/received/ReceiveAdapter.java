@@ -7,6 +7,7 @@ import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseAdapter;
 import com.forbitbd.storeapp.models.Receive;
@@ -18,15 +19,21 @@ import java.util.List;
 public class ReceiveAdapter extends BaseAdapter<Receive,ReceiveListener,ReceiveHolder> implements Filterable {
 
     private List<Receive> originalList;
+    private SharedProject.Permission storePermission;
 
-    public ReceiveAdapter(Context context, ReceiveListener listener) {
+    public ReceiveAdapter(Context context, ReceiveListener listener){
         super(context, listener);
+    }
+
+    public ReceiveAdapter(Context context, ReceiveListener listener,SharedProject.Permission storePermission) {
+        super(context, listener);
+        this.storePermission = storePermission;
     }
 
     @NonNull
     @Override
     public ReceiveHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ReceiveHolder(inflate(R.layout.item_receive,parent),getListener());
+        return new ReceiveHolder(inflate(R.layout.item_receive,parent),getListener(),storePermission);
     }
 
     private int getPosition(Receive receive){

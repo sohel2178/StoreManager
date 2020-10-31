@@ -42,7 +42,7 @@ public class SupplierFragment extends StoreBaseFragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new SupplierPresenter(this);
-        this.adapter = new SupplierAdapter(getContext(),this);
+        this.adapter = new SupplierAdapter(getContext(),this,getSharedProject().getStore());
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 import com.forbitbd.storeapp.models.Supplier;
@@ -15,10 +16,13 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
 
     ImageView ivEdit,ivDelete,ivAttach;
 
+    private SharedProject.Permission storePermission;
 
 
-    public SupplierHolder(View itemView, SupplierListener listener) {
+
+    public SupplierHolder(View itemView, SupplierListener listener,SharedProject.Permission storePermission) {
         super(itemView, listener);
+        this.storePermission = storePermission;
 
         tvName = itemView.findViewById(R.id.name);
         tvContact = itemView.findViewById(R.id.contact);
@@ -31,6 +35,18 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
         ivEdit.setOnClickListener(this);
         ivAttach.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
+
+        if(storePermission.isUpdate()){
+            ivEdit.setVisibility(View.VISIBLE);
+        }else{
+            ivEdit.setVisibility(View.GONE);
+        }
+
+        if(storePermission.isDelete()){
+            ivDelete.setVisibility(View.VISIBLE);
+        }else{
+            ivDelete.setVisibility(View.GONE);
+        }
 
         itemView.setOnClickListener(this);
     }

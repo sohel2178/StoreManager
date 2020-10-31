@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.SharedProject;
 
 public abstract class StoreBaseFragment extends Fragment {
 
@@ -26,6 +27,10 @@ public abstract class StoreBaseFragment extends Fragment {
 
     public Project getProject(){
         return activity.getProject();
+    }
+
+    public SharedProject getSharedProject(){
+        return activity.getSharedProject();
     }
 
     public void showProgressDialog(){

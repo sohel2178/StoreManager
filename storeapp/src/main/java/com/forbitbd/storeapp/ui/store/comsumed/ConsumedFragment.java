@@ -37,7 +37,7 @@ public class ConsumedFragment extends StoreBaseFragment implements ConsumedContr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ConsumeAdapter(getContext(),this);
+        adapter = new ConsumeAdapter(getContext(),this,getSharedProject().getStore());
         mPresenter = new ConsumedPresenter(this);
     }
 

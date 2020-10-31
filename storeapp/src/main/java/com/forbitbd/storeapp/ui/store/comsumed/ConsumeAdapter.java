@@ -8,6 +8,7 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 
 import com.forbitbd.androidutils.models.Consume;
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseAdapter;
 
@@ -17,15 +18,17 @@ import java.util.List;
 public class ConsumeAdapter extends BaseAdapter<Consume,ConsumeListener,ConsumeHolder> implements Filterable {
 
     private List<Consume> originalList;
+    private SharedProject.Permission storePermission;
 
-    public ConsumeAdapter(Context context, ConsumeListener listener) {
+    public ConsumeAdapter(Context context, ConsumeListener listener,SharedProject.Permission storePermission) {
         super(context, listener);
+        this.storePermission = storePermission;
     }
 
     @NonNull
     @Override
     public ConsumeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ConsumeHolder(inflate(R.layout.item_consume,parent),getListener());
+        return new ConsumeHolder(inflate(R.layout.item_consume,parent),getListener(),storePermission);
     }
 
     public int getPosition(Consume consume){

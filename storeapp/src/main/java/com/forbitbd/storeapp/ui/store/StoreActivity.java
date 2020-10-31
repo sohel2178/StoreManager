@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
@@ -53,7 +54,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private static final int CONSUMED_UPDATE=13000;
     private static final int READ_WRITE_PERMISSION=12000;
 
-    private Project project;
+    private SharedProject sharedProject;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter pagerAdapter;
@@ -71,7 +72,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         setContentView(R.layout.activity_store);
 
         mPresenter = new StorePresenter(this);
-        this.project = (Project) getIntent().getSerializableExtra(Constant.PROJECT);
+        this.sharedProject = (SharedProject) getIntent().getSerializableExtra(Constant.PROJECT);
 
         initView();
 
@@ -79,7 +80,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
 
     private void initView(){
         setupToolbar(R.id.toolbar);
-        getSupportActionBar().setTitle(project.getName().concat(" | Store"));
+        getSupportActionBar().setTitle(sharedProject.getProject().getName().concat(" | Store"));
 
         setupBannerAd(R.id.adView);
 
@@ -121,6 +122,18 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
 
             }
         });
+
+        // Project Permission Base Visibility
+
+        if(sharedProject.getStore().isWrite()){
+            fabCreateSupplier.setVisibility(View.VISIBLE);
+            fabReceived.setVisibility(View.VISIBLE);
+            fabConsumed.setVisibility(View.VISIBLE);
+        }else{
+            fabCreateSupplier.setVisibility(View.GONE);
+            fabReceived.setVisibility(View.GONE);
+            fabConsumed.setVisibility(View.GONE);
+        }
     }
 
 
@@ -159,14 +172,18 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
 
 
     public Project getProject(){
-        return project;
+        return sharedProject.getProject();
+    }
+
+    public SharedProject getSharedProject(){
+        return this.sharedProject;
     }
 
     @Override
     public void startAddSupplierActivity() {
         Intent intent = new Intent(getApplicationContext(), AddSupplierActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         intent.putExtras(bundle);
 
         startActivityForResult(intent,ADD_SUPPLIER);
@@ -176,7 +193,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     public void startReceivedActivity() {
         Intent intent = new Intent(getApplicationContext(), ReceivedActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         bundle.putSerializable(Constant.SUPPLIER_LIST, (Serializable) supplierFragment.getSuppliers());
         bundle.putStringArrayList(Constant.UNITS, (ArrayList<String>) receivedFragment.getUnits());
         bundle.putStringArrayList(Constant.NAMES, (ArrayList<String>) receivedFragment.getMaterialNames());
@@ -188,7 +205,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     public void startConsumedActivity() {
         Intent intent = new Intent(getApplicationContext(), ConsumedActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         bundle.putStringArrayList(Constant.UNITS, (ArrayList<String>) receivedFragment.getUnits());
         bundle.putStringArrayList(Constant.NAMES, (ArrayList<String>) receivedFragment.getMaterialNames());
         intent.putExtras(bundle);
@@ -199,7 +216,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     public void startReportActivity() {
         Intent intent = new Intent(this, ReportActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -209,7 +226,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     public void startUpdateSupplierActivity(Supplier supplier) {
         Intent intent = new Intent(getApplicationContext(), AddSupplierActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         bundle.putSerializable(Constant.SUPPLIER,supplier);
         intent.putExtras(bundle);
 
@@ -220,7 +237,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     public void startUpdateReceiveActivity(Receive receive) {
         Intent intent = new Intent(getApplicationContext(), ReceivedActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         bundle.putSerializable(Constant.RECEIVED,receive);
         bundle.putSerializable(Constant.SUPPLIER_LIST, (Serializable) supplierFragment.getSuppliers());
         bundle.putStringArrayList(Constant.UNITS, (ArrayList<String>) receivedFragment.getUnits());
@@ -234,7 +251,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     public void startUpdateConsumeActivity(Consume consume) {
         Intent intent = new Intent(getApplicationContext(), ConsumedActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.PROJECT,project);
+        bundle.putSerializable(Constant.PROJECT,sharedProject.getProject());
         bundle.putSerializable(Constant.CONSUME,consume);
         bundle.putStringArrayList(Constant.UNITS, (ArrayList<String>) receivedFragment.getUnits());
         bundle.putStringArrayList(Constant.NAMES, (ArrayList<String>) receivedFragment.getMaterialNames());
@@ -267,7 +284,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
 
     @Override
     public String saveFile(ResponseBody responseBody) {
-        return saveTaskFile("Construction Manager",project.getName(),"Store","store.xlsx",responseBody);
+        return saveTaskFile("Construction Manager",sharedProject.getProject().getName(),"Store","store.xlsx",responseBody);
     }
 
 
@@ -362,7 +379,7 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         if (EasyPermissions.hasPermissions(getApplicationContext(), perms)) {
             //sendDownloadRequest();
             Log.d("UUUUUUUU","Called");
-            mPresenter.downloadFile(project);
+            mPresenter.downloadFile(sharedProject.getProject());
         } else {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, "App need to Permission for Read and Write",

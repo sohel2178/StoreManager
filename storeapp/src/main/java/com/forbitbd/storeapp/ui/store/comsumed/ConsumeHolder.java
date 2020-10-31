@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forbitbd.androidutils.models.Consume;
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 
@@ -14,8 +15,11 @@ public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implement
 
     ImageView ivEdit,ivDelete,ivAttach;
 
-    public ConsumeHolder(View itemView, ConsumeListener listener) {
+    private SharedProject.Permission storePermission;
+
+    public ConsumeHolder(View itemView, ConsumeListener listener,SharedProject.Permission storePermission) {
         super(itemView, listener);
+        this.storePermission = storePermission;
 
         ivAttach = itemView.findViewById(R.id.attach);
         ivEdit = itemView.findViewById(R.id.edit);
@@ -29,6 +33,18 @@ public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implement
         ivEdit.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
         itemView.setOnClickListener(this);
+
+        if(storePermission.isUpdate()){
+            ivEdit.setVisibility(View.VISIBLE);
+        }else{
+            ivEdit.setVisibility(View.GONE);
+        }
+
+        if(storePermission.isDelete()){
+            ivDelete.setVisibility(View.VISIBLE);
+        }else{
+            ivDelete.setVisibility(View.GONE);
+        }
     }
 
     @Override

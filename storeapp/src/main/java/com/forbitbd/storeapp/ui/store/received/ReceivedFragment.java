@@ -47,7 +47,7 @@ public class ReceivedFragment extends StoreBaseFragment implements ReceivedContr
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new ReceivedPresenter(this);
-        adapter = new ReceiveAdapter(getContext(),this);
+        adapter = new ReceiveAdapter(getContext(),this,getSharedProject().getStore());
     }
 
     @Override
