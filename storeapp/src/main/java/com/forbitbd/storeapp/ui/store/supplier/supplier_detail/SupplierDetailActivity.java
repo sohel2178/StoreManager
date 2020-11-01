@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
+import com.forbitbd.androidutils.models.SharedProject;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
@@ -32,11 +33,14 @@ public class SupplierDetailActivity extends PrebaseActivity implements SupplierD
     private HistoryFragment historyFragment;
     private SummeryFragment summeryFragment;
 
+    private SharedProject sharedProject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supplier_detail);
         this.supplier = (Supplier) getIntent().getSerializableExtra(Constant.SUPPLIER);
+        this.sharedProject = (SharedProject) getIntent().getSerializableExtra(Constant.PROJECT);
 
         mPresenter = new SupplierDetailPresenter(this);
 
@@ -58,6 +62,10 @@ public class SupplierDetailActivity extends PrebaseActivity implements SupplierD
         tabLayout.setupWithViewPager(viewPager);
 
         mPresenter.getSupplierReceive(supplier);
+    }
+
+    public SharedProject getSharedProject(){
+        return this.sharedProject;
     }
 
     private void setupViewPager(ViewPager viewPager) {

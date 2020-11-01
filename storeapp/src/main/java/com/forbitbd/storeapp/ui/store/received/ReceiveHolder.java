@@ -45,6 +45,16 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
             ivDelete.setVisibility(View.GONE);
         }
 
+       /* if(storePermission!=null){
+
+        }else{
+            ivAttach.setEnabled(false);
+            ivDelete.setEnabled(false);
+            ivEdit.setEnabled(false);
+        }*/
+
+
+
     }
 
     @Override

@@ -21,9 +21,9 @@ public class ReceiveAdapter extends BaseAdapter<Receive,ReceiveListener,ReceiveH
     private List<Receive> originalList;
     private SharedProject.Permission storePermission;
 
-    public ReceiveAdapter(Context context, ReceiveListener listener){
+   /* public ReceiveAdapter(Context context, ReceiveListener listener){
         super(context, listener);
-    }
+    }*/
 
     public ReceiveAdapter(Context context, ReceiveListener listener,SharedProject.Permission storePermission) {
         super(context, listener);

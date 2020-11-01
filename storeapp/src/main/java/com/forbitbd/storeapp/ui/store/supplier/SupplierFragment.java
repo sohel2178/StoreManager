@@ -103,6 +103,7 @@ public class SupplierFragment extends StoreBaseFragment
         Intent intent = new Intent(getContext(), SupplierDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.SUPPLIER,supplier);
+        bundle.putSerializable(Constant.PROJECT,getSharedProject());
         intent.putExtras(bundle);
         startActivity(intent);
 

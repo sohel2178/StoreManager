@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class HistoryFragment extends StoreDetailBase implements HistoryContract.
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ReceiveAdapter(getContext(),this);
+        adapter = new ReceiveAdapter(getContext(),this,getSharedProject().getStore());
         mPresenter = new HistoryPresenter(this);
     }
 
@@ -72,6 +73,12 @@ public class HistoryFragment extends StoreDetailBase implements HistoryContract.
 
     @Override
     public void onImageClick(int position) {
+        Receive receive = adapter.getItem(position);
+        if(receive.getImage()!=null && !receive.getImage().equals("")){
+            get_activity().startZoomImageActivity(receive.getImage());
+        }else{
+            get_activity().showToast("Attachment not Found");
+        }
 
     }
 
@@ -81,9 +88,7 @@ public class HistoryFragment extends StoreDetailBase implements HistoryContract.
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.RECEIVED,adapter.getItem(position));
         receivedDetail.setArguments(bundle);
-
         receivedDetail.show(getChildFragmentManager(),"HHHHH");
-
     }
 
     @Override
