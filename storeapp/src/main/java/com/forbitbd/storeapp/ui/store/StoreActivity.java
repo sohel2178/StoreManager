@@ -19,6 +19,7 @@ import android.view.View;
 import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
@@ -136,6 +137,14 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         }
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(AppPreference.getInstance(this).getCounter()> com.forbitbd.androidutils.utils.Constant.COUNTER){
+            showInterAd();
+        }
+    }
 
     private void changeQueryText(int position){
         switch (position){
@@ -291,12 +300,16 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     @Override
     public void onClick(View v) {
         if(v==fabCreateSupplier){
+            AppPreference.getInstance(this).increaseCounter();
             mPresenter.startAddSupplierActivity();
         }else if(v==fabReceived){
+            AppPreference.getInstance(this).increaseCounter();
             mPresenter.startReceivedActivity();
         }else if(v==fabConsumed){
+            AppPreference.getInstance(this).increaseCounter();
             mPresenter.startConsumedActivity();
         }else if(v==fabReport){
+            AppPreference.getInstance(this).increaseCounter();
             mPresenter.startReportActivity();
         }else if(v==fabDownload){
             requestFileAfterPermission();

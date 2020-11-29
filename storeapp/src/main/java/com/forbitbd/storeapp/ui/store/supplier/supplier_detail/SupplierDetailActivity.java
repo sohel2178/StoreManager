@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
@@ -62,6 +63,14 @@ public class SupplierDetailActivity extends PrebaseActivity implements SupplierD
         tabLayout.setupWithViewPager(viewPager);
 
         mPresenter.getSupplierReceive(supplier);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(AppPreference.getInstance(this).getCounter()> com.forbitbd.androidutils.utils.Constant.COUNTER){
+            showInterAd();
+        }
     }
 
     public SharedProject getSharedProject(){

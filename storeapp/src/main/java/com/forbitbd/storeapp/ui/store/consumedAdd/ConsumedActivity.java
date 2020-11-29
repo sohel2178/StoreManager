@@ -21,6 +21,7 @@ import com.forbitbd.androidutils.dialog.MyDatePickerFragment;
 import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Project;
 import com.forbitbd.androidutils.models.Task;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.MyUtil;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.storeapp.R;
@@ -136,6 +137,14 @@ public class ConsumedActivity extends PrebaseActivity implements ConsumedContrac
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(AppPreference.getInstance(this).getCounter()> com.forbitbd.androidutils.utils.Constant.COUNTER){
+            showInterAd();
+        }
     }
 
     @Override

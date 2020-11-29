@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 import com.forbitbd.storeapp.models.Receive;
@@ -75,8 +76,10 @@ public class ReceiveHolder extends BaseHolder<Receive,ReceiveListener> implement
         if(view==itemView){
             getListener().onItemClick(getAdapterPosition());
         }else if(view==ivEdit){
+            AppPreference.getInstance(view.getContext()).increaseCounter();
             getListener().onItemUpdate(getAdapterPosition());
         }else if(view==ivDelete){
+            AppPreference.getInstance(view.getContext()).increaseCounter();
             getListener().onItemRemove(getAdapterPosition());
         }else if(view==ivAttach){
             getListener().onImageClick(getAdapterPosition());

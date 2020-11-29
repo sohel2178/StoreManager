@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 
@@ -67,8 +68,10 @@ public class ConsumeHolder extends BaseHolder<Consume,ConsumeListener> implement
         if(view==ivAttach){
             getListener().onImageClick(getAdapterPosition());
         }else if(view==ivEdit){
+            AppPreference.getInstance(view.getContext()).increaseCounter();
             getListener().onItemUpdate(getAdapterPosition());
         }else if(view==ivDelete){
+            AppPreference.getInstance(view.getContext()).increaseCounter();
             getListener().onItemRemove(getAdapterPosition());
         }else if(view==itemView){
             getListener().onItemClick(getAdapterPosition());

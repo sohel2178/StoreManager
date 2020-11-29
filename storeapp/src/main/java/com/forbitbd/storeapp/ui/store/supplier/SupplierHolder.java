@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forbitbd.androidutils.models.SharedProject;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.storeapp.R;
 import com.forbitbd.storeapp.baseAdapter.BaseHolder;
 import com.forbitbd.storeapp.models.Supplier;
@@ -62,6 +63,7 @@ public class SupplierHolder extends BaseHolder<Supplier,SupplierListener> implem
 
     @Override
     public void onClick(View v) {
+        AppPreference.getInstance(v.getContext()).increaseCounter();
         if(v==itemView){
             getListener().onItemClick(getAdapterPosition());
         }else if(v==ivEdit){

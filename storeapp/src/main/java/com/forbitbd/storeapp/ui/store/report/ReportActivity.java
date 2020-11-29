@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.forbitbd.androidutils.models.Consume;
 import com.forbitbd.androidutils.models.Project;
+import com.forbitbd.androidutils.utils.AppPreference;
 import com.forbitbd.androidutils.utils.PrebaseActivity;
 import com.forbitbd.androidutils.utils.ViewPagerAdapter;
 import com.forbitbd.storeapp.R;
@@ -75,6 +76,14 @@ public class ReportActivity extends PrebaseActivity implements ReportContract.Vi
 
         mPresenter.getStoreData(project.get_id());
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(AppPreference.getInstance(this).getCounter()> com.forbitbd.androidutils.utils.Constant.COUNTER){
+            showInterAd();
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
