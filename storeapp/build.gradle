@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4' // Fab Menu Button
 
     implementation 'com.google.android.gms:play-services-ads:19.4.0'
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0'
 }
 
 //task clean(type:Delete){

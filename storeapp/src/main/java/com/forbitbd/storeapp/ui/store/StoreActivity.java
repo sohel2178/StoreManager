@@ -11,7 +11,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -172,9 +171,6 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         pagerAdapter.addFragment(supplierFragment,"Suppliers");
         pagerAdapter.addFragment(receivedFragment,"Received");
         pagerAdapter.addFragment(consumedFragment,"Consumed");
-       /* pagerAdapter.addFragment(new AccountFragment(), "Accounts");
-        pagerAdapter.addFragment(new TransactionFragment(), "Transactions");*/
-
         viewPager.setAdapter(pagerAdapter);
 
     }
@@ -346,7 +342,6 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
         }
 
         if(requestCode==CONSUMED_UPDATE && resultCode == RESULT_OK){
-            Log.d("CALLHHHH","CALL OnActivityResult: ");
             Consume consume = (Consume) data.getSerializableExtra(Constant.CONSUME);
             consumedFragment.updateItem(consume);
         }
@@ -390,8 +385,6 @@ public class StoreActivity extends PrebaseActivity implements StoreContract.View
     private void requestFileAfterPermission() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(getApplicationContext(), perms)) {
-            //sendDownloadRequest();
-            Log.d("UUUUUUUU","Called");
             mPresenter.downloadFile(sharedProject.getProject());
         } else {
             // Do not have permissions, request them now
